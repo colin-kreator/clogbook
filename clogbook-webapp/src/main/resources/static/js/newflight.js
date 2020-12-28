@@ -47,31 +47,52 @@ $(document).ready(function() {
 	function createJsonToSend(){
 		let json = {};
 		
-		const j_date = $("#flight_date input").val();
-		json["date"] = j_date;
+		//DATE
+			const j_date = $("#flight_date input").val();
+			json["date"] = j_date;
 		
-		if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
-			let j_aircraft = {};
-			j_aircraft ["registration"] = $("#flight_aircraft .reg input").val();
-			if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
-				let j_aircraftmodel = {};
-				j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
-				j_aircraft["aircraftModel"] = j_aircraftmodel;
-			}else if($('#flight_aircraft .type input').data("am") != null){
-				let j_aircraftmodel = {};
-				j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
-				j_aircraft["aircraftModel"] = j_aircraftmodel;
+		//AIRCRAFT
+			if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
+				let j_aircraft = {};
+				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val();
+				if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
+					let j_aircraftmodel = {};
+					j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
+					j_aircraft["aircraftModel"] = j_aircraftmodel;
+				}else if($('#flight_aircraft .type input').data("am") != null){
+					let j_aircraftmodel = {};
+					j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
+					j_aircraft["aircraftModel"] = j_aircraftmodel;
+				}
+				json["aircraft"] = j_aircraft;
+			}else if($("#flight_aircraft .reg input").data("act") != null){
+				let j_aircraft = {};
+				j_aircraft["id"] = $("#flight_aircraft .reg input").data("act").id;
+				json["aircraft"] = j_aircraft;
 			}
-			json["aircraft"] = j_aircraft;
-		}else if($("#flight_aircraft .reg input").data("act") != null){
-			let j_aircraft = {};
-			j_aircraft["id"] = $("#flight_aircraft .reg input").data("act").id;
-			json["aircraft"] = j_aircraft;
-		}
 		
+		//AIRPORTS
+			j_dep_airport = $("#flight_departure .place input").data("apt");
+			j_arr_airport = $("#flight_arrival .place input").data("apt");
+			if(j_dep_airport != null){
+				json["departureAirport"] = j_dep_airport;
+			}
+			if(j_arr_airport != null){
+				json["arrivalAirport"] = j_arr_airport;
+			}
 		
+		//TIMES
+			j_dep_time = $("#flight_departure .time input").val();
+			j_arr_time = $("#flight_arrival .time input").val();
+			if(j_dep_time !=""){
+				json["departureTime"] = j_dep_time;
+			}
+			if(j_arr_time !=""){
+				json["arrivalTime"] = j_arr_time;
+			}
+			
 		
-		
+		console.log(JSON.stringify( json));
 		
 		return JSON.stringify( json);
 	}
@@ -90,6 +111,7 @@ $(document).ready(function() {
 
 	//Gestion des autocomplete airport
 	$("#flight_departure .place input, #flight_arrival .place input").change(function(){
+		
 		validateAirportAjax( $(this) );
 		
 		updateAirportSrSs($(this).parents(".field"));
@@ -470,12 +492,19 @@ $(document).ready(function() {
 	
 	function validateAirportAjax(inputElement){
 		
+		if(inputElement.val() == ""){
+			inputElement.removeClass("is-success");
+			inputElement.removeClass("is-danger");
+			inputElement.data("apt", null);
+			return;
+		}
+		
 		$.ajax({
 			url:"../api/airport/icao/"+inputElement.val(),
 			method:"GET",
-			dataType:"json"
+			dataType:"json",
 		})
-		.done(function(apt){
+		.then(function(apt){
 			if(apt != null){
 				inputElement.addClass("is-success");
 				inputElement.removeClass("is-danger");
@@ -491,6 +520,14 @@ $(document).ready(function() {
 			inputElement.addClass("is-danger");
 			inputElement.removeClass("is-success");
 			inputElement.data("apt", null);
+		});
+	}
+
+	function ajaxGetAirport(url){
+		return $.ajax({
+			url:url,
+			method:"GET",
+			dataType:"json"
 		});
 	}
 
