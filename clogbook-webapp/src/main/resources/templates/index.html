@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <title>CLogbook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="stylesheet" th:href="@{/css/main.css}" href="/css/main.css">
+        <!--CSS-->
+
+        <!--Font-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/40f9fa71eb.js" crossorigin="anonymous"></script>
+        <!--Font-->
+
+        <!-- meta SEO -->
+        <meta name="description" content="With CLogbook you can log you pilot's flight hours freely and simply">
+        <meta name="keywords" content="clogbook, pilot, logbook, airplane, aircraft, book, logger">
+        <!-- meta SEO -->
+
+
+    </head>
+
+    <body>
+        <!--Navbar-->
+        <nav class="navbar is-dark" id="navbar">
+                <div class="navbar-brand">
+                  <a class="navbar-item  is-nobackground" href="#">
+                    <img src="img/logo-full.png" alt="CLogbook logo"  height="32">
+                  </a>
+                  <div class="navbar-burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              
+                <div id="navbar-menu" class="navbar-menu">
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      <div class="field is-grouped">
+                        <p class="control">
+                          <a class="button" id="button_login">
+                            <span class="icon">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </span>
+                            <span>
+                              Log in
+                            </span>
+                          </a>
+                        </p>
+                        <p class="control">
+                          <a class="button is-info" id="button_signup">
+                            <span class="icon">
+                                <i class="fas fa-file-alt"></i>
+                            </span>
+                            <span>Sign up</span>
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </nav> 
+
+        <!-- Navbar -->
+
+        <!--Banner-->
+          <section class="hero is-medium has-bg-img"> 
+            <div class="hero-body"> 
+              <div class="container has-text-centered"> 
+                <h1 class="title is-1">Welcome on CLogbook</h1>
+                <h2 class="subtitle">Simply log your flying hours</h2>
+              </div>
+            </div> 
+          </section>
+        <!--Banner-->
+        
+        <!-- Login modal -->
+        <div class="modal" id="modal_login">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Log in</p>
+              <button class="delete modal_close_action" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+
+				<div th:if="${param.error}">
+		        	<div class="message is-danger my-5">
+		        		<div class="message-body">
+		        			<div th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+    							<span th:text="${errorMsg}">Wrong input!</span>
+							</div>
+		        		</div>
+		        		
+		       		</div>
+		        </div>
+				<div th:if="${param.logout}">
+		        	<!-- Si redirigé ici après logout -->
+		        </div>
+
+              <form th:action="@{/login-process}" method="POST" class="login_form">
+                                
+                <div class="field">
+                  <label class="label">Username</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="email@example.com" name="userlogin" id="field_username">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"></p>
+                </div>
+                
+                <div class="field">
+                  <label class="label">Password</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" name="userpassword" placeholder="Your password" id="field_password">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-key"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"></p>
+                </div>
+                <div class="level">
+                  <div class="level-left">
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" name = "rememberme">
+                          Remember me ?
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <a href="#">Forgotten password ?</a>
+                  </div>
+                </div>            
+                
+                <div class="field is-grouped">
+                  <div class="control">
+                    <input type = "submit" class="button is-link" value="Log in">
+                  </div>
+                  <div class="control">
+                    <button class="button is-link is-light modal_close_action" >Cancel</button>
+                  </div>
+                </div>
+              
+              </form>
+            </section>
+            <!-- <footer class="modal-card-foot">
+              <button class="button is-info">Log in</button>
+              <button class="button">Cancel</button>
+            </footer> -->
+          </div>
+        </div>
+        <!-- Login modal -->  
+        
+        
+                <!-- Signup modal --><!-- Elle s'affiche toute seule si le parametre signup est donné en param url ou si il y a eu des erreurs de remplissage -->
+               
+        <div class="modal" id="modal_signup" th:classappend="(${param.signup} OR ${#fields.hasErrors('${signupForm.*}')} )? 'is-active' " >
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Subscribtion</p>
+              <button class="delete modal_close_action" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+
+              <form th:action="@{/signup}" method="POST" class="signup_form" th:object="${signupForm}">
+                                
+                <div class="field" id="field_firstName">
+                  <label class="label">First Name</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Your first name" th:field="*{firstName}">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></p>
+                </div>
+                
+                <div class="field" id="field_lastName">
+                  <label class="label">Last Name</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Your last name" th:field="*{lastName}">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></p>
+                </div>
+                
+                <div class="field" id="field_email">
+                  <label class="label">Email</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="text" placeholder="Your email" th:field="*{email}">
+                    <span class="icon is-small is-left">
+                     	<i class="fas fa-at"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></p>
+                </div>
+                
+                <div class="field" id="field_password">
+                  <label class="label">Password</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" placeholder="Your password" th:field="*{password}">
+                    <span class="icon is-small is-left">
+                     	<i class="fas fa-key"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></p>
+                </div>
+                
+                <div class="field" id="field_passwordConfirmation">
+                  <label class="label">Password confirmation</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" placeholder="Re-enter your password">
+                    <span class="icon is-small is-left">
+                     	<i class="fas fa-key"></i>
+                    </span>
+                  </div>
+                  <p class="help is-danger"></p>
+                </div>
+                
+                <div class="field is-grouped">
+                  <div class="control">
+                    <input type = "submit" class="button is-link" value="Register" id="modal_signup_submit">
+                  </div>
+                  <div class="control">
+                    <button class="button is-link is-light modal_close_action" >Cancel</button>
+                  </div>
+                </div>
+              
+              </form>
+            </section>
+            <!-- <footer class="modal-card-foot">
+              <button class="button is-info">Log in</button>
+              <button class="button">Cancel</button>
+            </footer> -->
+          </div>
+        </div>
+        <!-- Signup modal -->  
+
+
+        <!--Section : a propos-->
+        <div class="block about">
+          <div class="container">
+            <div class="columns">
+              <div class="column">
+                <div class="card">
+                  <div class="card-content has-text-centered">
+                    <span class="icon is-large has-text-success">
+                      <i class="fas fa-money-bill-wave fa-3x"></i>
+                    </span>
+                    <div class="content has-text-justified">
+                      <p>
+                        CLogbook is free of use and illimited. Why ? This site is the first website of its author, who did it by passion.
+                      </p>
+                    </div>
+                    <div class="content">
+                      <button class="button is-info">Get started now !</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="card">
+                  <div class="card-content has-text-centered">
+                    <span class="icon is-large has-text-success">
+                      <i class="fas fa-3x fa-edit"></i>
+                    </span>
+                    <div class="content has-text-justified">
+                      <p>
+                        Simply fill the semi-automated form to register your flights one by one. If you need to, you can also import a large number of fligths using your own .csv file.
+                      </p>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+              <div class="column">
+                <div class="card">
+                  <div class="card-content has-text-centered">
+                    <div class="icon is-large has-text-success">
+                      <i class="fas fa-3x fa-chart-bar"></i>
+                    </div>
+                    <div class="content has-text-justified">
+                      <p>
+                        See your customizable flying statistics with a pure dashboard.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Section : a propos-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+
+</html>

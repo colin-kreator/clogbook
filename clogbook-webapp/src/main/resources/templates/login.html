@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>CLogbook - login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--CSS-->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<!--CSS-->
+
+
+<!--Font-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+	rel="stylesheet">
+<script src="https://kit.fontawesome.com/40f9fa71eb.js"
+	crossorigin="anonymous"></script>
+<!--Font-->
+
+<!-- meta SEO -->
+<meta name="description"
+	content="With CLogbook you can log you pilot's flight hours freely and simply">
+<meta name="keywords"
+	content="clogbook, pilot, logbook, airplane, aircraft, book, logger">
+<!-- meta SEO -->
+
+
+</head>
+
+<body>
+
+ 	<!--Navbar-->
+            <nav class="navbar is-dark" id="navbar">
+                <div class="navbar-brand">
+                  <a class="navbar-item is-nobackground" th:href="@{/}">
+                    <img th:src="@{/img/logo-full.png}" alt="CLogbook logo"  height="32">
+                  </a>
+                </div>
+            </nav>
+        <!-- Navbar -->
+
+	<!--Banner-->
+	<section class="hero is-medium has-bg-img">
+		<div class="hero-head">
+			<div class="container has-text-centered">
+				<h1 class="title is-1">Welcome on CLogbook</h1>
+				<h2 class="subtitle">Simply log your flying hours</h2>
+			</div>
+		</div>
+		<div class="hero-body"></div>
+	</section>
+	<!--Banner-->
+
+	<!-- Login form-->
+	<div class="level" id="login_level">
+		<div class="level-item">
+			<div class="box">
+				<div class="has-text-centered">
+					<p class="title is-3">Log in</p>
+				</div>
+				
+				<div th:if="${param.error}">
+		        	<div class="message is-danger my-5">
+		        		<div class="message-body">
+		        			<div th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+    							<span th:text="${errorMsg}">Wrong input!</span>
+							</div>
+		        		</div>
+		        		
+		       		</div>
+		        </div>
+				<div th:if="${param.logout}">
+		        	<!-- Si redirigé ici après logout -->
+		        </div>
+				<form th:action="@{/login-process}" method="POST" class="login_form">
+					<div class="field">
+						<label class="label">Username</label>
+						<div class="control has-icons-left has-icons-right">
+							<input class="input" type="text" placeholder="email@example.com" name="userlogin" id="field_username"> 
+							<span class="icon is-small is-left"> 
+								<i class="fas fa-user"></i>
+							</span>
+						</div>
+						<p class="help is-danger"></p>
+					</div>
+
+					<div class="field">
+						<label class="label">Password</label>
+						<div class="control has-icons-left has-icons-right">
+							<input class="input" type="password" name="userpassword"placeholder="Your password" id="field_password"> 
+							<span class="icon is-small is-left"> 
+								<i class="fas fa-key"></i>
+							</span>
+						</div>
+						<p class="help is-danger"></p>
+					</div>
+					<div class="level">
+						<div class="level-left">
+							<div class="field">
+								<div class="control">
+									<label class="checkbox"> 
+									<input type="checkbox" name="rememberme"> Remember me ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="level-right">
+							<a href="#">Forgotten password ?</a>
+						</div>
+					</div>
+
+					<div class="field is-grouped">
+						<div class="control">
+							<input type="submit" class="button is-link" value="Log in">
+						</div>
+						<div class="control">
+							<a class="button" th:href="@{/?signup}">Sign up</a>
+						</div>
+						<div class="control">
+							<a class="button" th:href="@{/}">Home</a>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+
+
+		</div>
+	</div>
+
+	<!-- Login form -->
+
+
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

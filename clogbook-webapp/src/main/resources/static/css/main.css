@@ -1,0 +1,63 @@
+/*
+GLOBAL
+*/
+html{
+    background-color: #9ba2ad
+}
+body{
+    font-family: 'Rubik', sans-serif;
+}
+
+/*MENU*/
+#navbar{
+    position: fixed;
+    width: 100%;
+    background-color: rgba(30,30,30, 0.4);
+}
+
+.is-nobackground{
+    background: none;
+}
+
+.is-nobackground:hover{
+    opacity: 0.8;
+    background: none;
+}
+
+
+/*BANNER*/
+
+.hero h1, .hero h2{
+    color:#FFFFFF;
+    text-shadow: 2px 2px 5px #000000;
+}
+
+.hero-head h1{
+	margin-top: 20px;
+}
+
+.hero.has-bg-img { 
+    background: url('../img/bg.jpg') center; 
+    background-size:cover; 
+}
+
+.hero.has-bg2-img { 
+    background: url('../img/bg2.jpg') center; 
+    background-size:cover; 
+}
+
+.about .card{
+    margin-top: 15px;
+}
+
+.about .card .content p{
+    margin-top: 15px;
+}
+
+/*
+ENSEMBLE DE CONTROL MULTILIGNES
+*/
+.is-grouped-multiline .field{
+    margin-right: 10px;
+}
+

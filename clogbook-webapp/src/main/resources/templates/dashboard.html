@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <title>CLogbook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="stylesheet" th:href="@{/css/main.css}" href="/css/main.css">
+        <!--CSS-->
+
+        <!--Font-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/40f9fa71eb.js" crossorigin="anonymous"></script>
+        <!--Font-->
+
+        <!-- meta SEO -->
+        <meta name="description" content="With CLogbook you can log you pilot's flight hours freely and simply">
+        <meta name="keywords" content="clogbook, pilot, logbook, airplane, aircraft, book, logger">
+        <!-- meta SEO -->
+
+
+    </head>
+
+    <body>
+        <!--Navbar-->
+            <nav class="navbar is-dark" id="navbar">
+                <div class="navbar-brand">
+                  <a class="navbar-item is-nobackground" th:href="@{/}">
+                    <img th:src="@{/img/logo-full.png}" src="/img/logo-full.png" alt="CLogbook logo"  height="32">
+                  </a>
+                  <div class="navbar-burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div id="navbar-menu" class="navbar-menu">
+                  <div class="navbar-start">
+                    <a class="navbar-item is-nobackground" th:href="@{/app/dashboard}">
+                      Dashboard
+                    </a>
+                    <div class="navbar-item  is-nobackground has-dropdown is-hoverable">
+                      <a class="navbar-link" href="#">
+                        Manage your datas
+                      </a>
+                      <div class="navbar-dropdown is-boxed">
+                        <a class="navbar-item" href="#">
+                          Aircrafts
+                        </a>
+                        <a class="navbar-item" href="#">
+                          Pilots
+                        </a>
+                        <a class="navbar-item" href="#">
+                          Preferences
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      <div class="field is-grouped">
+                        <p class="control">
+                          <a class="button" th:href="@{/logout-process}">
+                            <span class="icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </span>
+                            <span>
+                              Log out
+                            </span>
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </nav>
+        
+
+       
+        <!-- Navbar -->
+
+     
+        <!--Banner-->
+        
+        <section class="hero is-medium has-bg2-img"> 
+          <div class="hero-body"> 
+            <div class="container"> 
+              <h1 class="title is-3" ><span sec:authentication="principal.user.firstName">FirstName</span> <span sec:authentication="principal.user.lastName">LastName</span></h1>
+            </div>
+          </div> 
+        </section>
+      <!--Banner-->
+ 
+ 
+        <!--Section : statistics-->
+        
+          <div id="stats_level_container" class="container">
+
+            <div class="box" id="stats_level_box">
+              <div class="level" id="stats_level">
+
+                <div class="level-item">
+                  <p class="control">
+                    <a id="button_newflight" class="button is-success">
+                      <span class="icon">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <span>
+                        New Flight
+                      </span>
+                    </a>
+                  </p>
+                    
+                  
+                </div>
+
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Total hours</p>
+                    <p> <span class="title is-4">40 000</span> <span class="title is-6">:08</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Night hours</p>
+                    <p> <span class="title is-4">18 000</span> <span class="title is-6">:53</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Ifr hours</p>
+                    <p> <span class="title is-4">25 000</span> <span class="title is-6">:41</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">12 months hours</p>
+                    <p> <span class="title is-4">168</span> <span class="title is-6">:17</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">3 months hours</p>
+                    <p> <span class="title is-4">0</span> <span class="title is-6">:00</span> </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <!--Section : stats-->
+
+
+        <!-- tableau vols -->
+          <!--div class="column is-narrow">
+            <div class="box">
+              <div class="table-wrapper">
+                <table class="table is-hoverable is-narrow ">
+                  <thead class="has-text-centered">
+                    <tr>
+                      <td rowspan="2"><strong>Date</strong><br/>(dd/mm/yy)</td>
+                      <th colspan="2"><abbr title="Departure place">Dep</abbr></th>
+                      
+                      <th colspan="2"><abbr title="Arrival place">Arrival</abbr></th>
+                      
+                      <th colspan="2">Aircraft</th>
+                      <th colspan="2"><abbr title="Single pilot">SP</abbr></th>
+
+                      <th rowspan="2"><abbr title="Multli pilot time">MP</abbr></th>
+                      <th rowspan="2"><abbr title="Total flight time">TT</abbr></th>
+                      <th rowspan="2"><abbr title="Pilot in command Name">PIC</abbr></th>
+                      <th colspan="2"><abbr title="Take offs">T/Os</abbr></th>
+                      <th colspan="2"><abbr title="Landings">LDGs</abbr></th>
+                      <th colspan="3">Op. times</th>
+                      <th colspan="4">Pilot fonciton times</th>                      
+                      <th colspan="2">Sim sessions</th>
+                      <th>Remarks</th>
+                    </tr>
+                    <tr>
+                      <th><abbr title="Departure place">Place</abbr></th>
+                      <th><abbr title="Departure time">Time</abbr></th>
+                      <th><abbr title="Arrival place">Place</abbr></th>
+                      <th><abbr title="Arrival time">Time</abbr></th>
+                      <th>Type</th>
+                      <th><abbr title="Registration">Reg.</abbr></th>
+                      <th><abbr title="Single engine">SE</abbr></th>
+                      <th><abbr title="Multi engine">ME</abbr></th>
+                      <th><abbr title="Day take off">DTO</abbr></th>
+                      <th><abbr title="Night take off">NTO</abbr></th>
+                      <th><abbr title="Day landing">DLD</abbr></th>
+                      <th><abbr title="Night landing">NLD</abbr></th>
+                      <th><abbr title="Night time">Night</abbr></th>
+                      <th><abbr title="Instrument time">IFR</abbr></th>
+                      <th><abbr title="Cross-country time">XC</abbr></th>
+                      <th><abbr title="Pic time">PIC</abbr></th>
+                      <th><abbr title="Co-pilot time">COPI</abbr></th>
+                      <th><abbr title="Dual time">DUAL</abbr></th>
+                      <th><abbr title="Instructor time">INSTR</abbr></th>
+                      <th><abbr title="Simulator type">Type</abbr></th>
+                      <th><abbr title="Sim session time">Time</abbr></th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    <tr>
+                      <th>07/02/20</th>
+                      <td>EHAM</td>
+                      <td>19:58</td>
+                      <td>EGCC</td>
+                      <td>21:01</td>
+                      <td>E75</td>
+                      <td>GFBJK</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>1:03</td>
+                      <td>1:03</td>
+                      <td>D. HEALY</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>1:03</td>
+                      <td>1:03</td>
+                      <td>1:03</td>
+                      <td>-</td>
+                      <td>1:03</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PM</td>
+                    </tr>
+  
+                    <tr>
+                      <th>11/02/20</th>
+                      <td>EGCC</td>
+                      <td>06:45</td>
+                      <td>LFPG</td>
+                      <td>08:05</td>
+                      <td>E75</td>
+                      <td>GFBJB</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>1:20</td>
+                      <td>1:20</td>
+                      <td>D. HEALY</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>0:25</td>
+                      <td>1:20</td>
+                      <td>1:20</td>
+                      <td>-</td>
+                      <td>1:20</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                    <tr>
+                      <th>18/02/20</th>
+                      <td>LFQQ</td>
+                      <td>08:03</td>
+                      <td>LFQQ</td>
+                      <td>10:03</td>
+                      <td>DA40TDI</td>
+                      <td>FHZIC</td>
+                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>2:00</td>
+                      <td>Self</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>0:20</td>
+                      <td>2:00</td>
+                      <td>2:00</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>PF</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+              </div>
+              
+  
+  
+            </div>
+  
+          </div-->
+
+    
+
+        <!-- tableau vols -->
+       
+
+
+		<!-- Formulaire nouveau vol -->
+		
+		
+		<div class="modal is-active" id="modal_newflight">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">New flight</p>
+              <button class="delete modal_close_action" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+	            <form id="new_flight_form" action="">
+	              <div class="columns">
+	                <div class="column is-one-third">
+	                  <div class="field" id="flight_date">
+	                    <label class="label">Date of flight</label>
+	                    <div class="control has-icons-left">
+	                      <input class="input" type="text" placeholder="dd/mm/yy">
+	                      <span class="icon is-small is-left">
+	                        <i class="far fa-calendar-alt"></i>
+	                      </span>
+	                    </div>
+	                    <p class="help is-danger"></p>
+	                  </div>
+	                </div>
+	                
+	                <div class="column">
+	                  <div class="field" id="flight_aircraft">
+	                    <label class="label">Aircraft flown</label>
+	                    <div class="columns">
+	                      <div class="column is-two-fifths">
+	                        <div class="control has-icons-left reg">
+	                          <input class="input" type="text" style="text-transform: uppercase" list="act_reg_datalist">
+	                          <datalist id="act_reg_datalist">
+	                          </datalist>
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Aircraft registration</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left type">
+	                          <input class="input" type="text" list="act_typ_datalist">
+	                          <datalist id="act_typ_datalist">
+	                          </datalist>
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Aircraft type</p>
+	                      </div>
+	                      
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	              </div>
+	
+	              <!-- Ligne suivante-->
+	
+	              <div class="columns">
+	                <div class="column">
+	                  <div class="field" id="flight_departure">
+	                    <label class="label">Departure<span class="subtitle is-7 srss"></span></label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left place">
+	                          <input class="input" style="text-transform: uppercase" type="text">
+	                          
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-departure"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Airport ICAO</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left time">
+	                          <input class="input" type="text" placeholder="hh:mm">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-departure"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">hh:mm in Zulu time</p>
+	                      </div>
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	
+	                <div class="column">
+	                  <div class="field" id="flight_arrival">
+	                    <label class="label">Arrival<span class="subtitle is-7 srss"></span></label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left place">
+	                          <input class="input" style="text-transform: uppercase" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-arrival"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Airport ICAO</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left time">
+	                          <input class="input" type="text" placeholder="hh:mm">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-arrival"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">hh:mm in Zulu time</p>
+	                      </div>
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	
+	
+	              </div>
+	
+	              <!-- Ligne suivante-->
+	
+	              <div class="columns">
+	                <div class="column is-two-fifths">
+	                  <div class="field" id="flight_pic">
+	                    <label class="label">PIC Name</label>
+	                    <div class="control has-icons-left place">
+	                      <input class="input" type="text" list = "pic_datalist">
+	                      <datalist id="pic_datalist">
+	                      </datalist>
+	                      <span class="icon is-small is-left">
+	                        <i class="fas fa-user-tie"></i>
+	                      </span>
+	                    </div>
+	                    <p class="help is-dark"></p>
+	                  </div>
+	                </div>
+	
+	                <div class="column">
+	                  <div class="field" id="flight_to-ldg">
+	                    <label class="label">Take Off and landings</label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left to-day">
+	                          <input class="input" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-sun"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">T/O day</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left to-night">
+	                          <input class="input" type="text" >
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-moon"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">T/O night</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left ldg-day">
+	                          <input class="input" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-sun"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">LDG day</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left ldg-night">
+	                          <input class="input" type="text" >
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-moon"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">LDG night</p>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	
+	              <!--Ligne suivante-->
+	              <div class="field is-horizontal flight_time" id="flight_cond">
+	                <div class="field-label is-normal">
+	                  <label class="label">Conditions</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	
+	                      <div class="column">
+	                        <div class="field mp">
+	                          <div class="control">
+	                            <label class="checkbox">
+	                              <input type="checkbox" id="MP_CB">
+	                              Multi-Pilot
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	                      <div class="column">
+	                        <div class="field ifr">
+	                          <div class="control">
+	                            <label class="checkbox">
+	                              <input type="checkbox" id="IFR_CB">
+	                              IFR
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control">
+	                            <label class="radio">
+	                              <input type="radio" name="engines" id="SE_CB" checked>
+	                              Single-engine
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control">
+	                            <label class="radio">
+	                              <input type="radio" name="engines" id="ME_CB">
+	                              Multi-engine
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	  
+	                    </div>
+	
+	                  </div>
+	                  
+	                </div>
+	              </div>
+	               <!-- Ligne suivante-->
+	
+	             
+	              <div class="field is-horizontal flight_time">
+	                <div class="field-label is-normal">
+	                  <label class="label">Operational times</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control total-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Total time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control night-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Night time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control ifr-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">IFR time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control xc-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">X-country time</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div> 
+	                </div>
+	              </div>
+	
+	              <div class="field is-horizontal flight_time">
+	                <div class="field-label is-normal">
+	                  <label class="label">Pilot times</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control pic-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">PIC time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control copilot-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Co-pilot time</p>
+	                        </div>
+	                      </div>
+	
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control multi-engine-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Dual time</p>
+	                        </div>
+	                      </div>
+	
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control night-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Instructor time</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	              <!-- Ligne suivante-->
+	
+	              <div class="field is-horizontal" id="remarks">
+	                <div class="field-label is-normal">
+	                  <label class="label">Remarks</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control has-icons-left">
+	                            <input class="input" type="text">
+	                            <span class="icon is-small is-left">
+	                              <i class="fas fa-user-tie"></i>
+	                            </span>
+	                          </div>
+	                          <p class="help is-dark">Max 50 characters</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	
+	
+	          
+	
+	              <!--Ligne suivante-->
+	
+	
+				</form>
+            </section>
+            <footer class="modal-card-foot">
+              <p class="control">
+                <a class="button is-info" id="button_save_newflight">
+                  <span class="icon">
+                    <i class="fas fa-save"></i>
+                  </span>
+                  <span>
+                    Save flight
+                  </span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button modal_close_action">
+                  <span class="icon">
+                    <i class="fas fa-window-close"></i>
+                  </span>
+                  <span>Cancel</span>
+                </a>
+              </p>
+              
+            </footer>
+          </div>
+        </div>
+		
+
+
+
+
+		<!-- Formulaire nouveau vol -->
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+        <script th:src="@{/js/newflight.js}" src="/js/newflight.js"></script>
+    </body>
+
+</html>
