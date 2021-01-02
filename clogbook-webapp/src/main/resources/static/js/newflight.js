@@ -53,20 +53,20 @@ $(document).ready(function() {
 		
 		//AIRCRAFT
 			if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
-				let j_aircraft = {};
+				const j_aircraft = {};
 				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val();
 				if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
-					let j_aircraftmodel = {};
+					const j_aircraftmodel = {};
 					j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
 					j_aircraft["aircraftModel"] = j_aircraftmodel;
 				}else if($('#flight_aircraft .type input').data("am") != null){
-					let j_aircraftmodel = {};
+					const j_aircraftmodel = {};
 					j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
 					j_aircraft["aircraftModel"] = j_aircraftmodel;
 				}
 				json["aircraft"] = j_aircraft;
 			}else if($("#flight_aircraft .reg input").data("act") != null){
-				let j_aircraft = {};
+				const j_aircraft = {};
 				j_aircraft["id"] = $("#flight_aircraft .reg input").data("act").id;
 				json["aircraft"] = j_aircraft;
 			}
@@ -81,7 +81,7 @@ $(document).ready(function() {
 				json["arrivalAirport"] = j_arr_airport;
 			}
 		
-		//TIMES
+		//TIMES OF ARRIVAL / DEPARTURE
 			j_dep_time = $("#flight_departure .time input").val();
 			j_arr_time = $("#flight_arrival .time input").val();
 			if(j_dep_time !=""){
@@ -89,6 +89,17 @@ $(document).ready(function() {
 			}
 			if(j_arr_time !=""){
 				json["arrivalTime"] = j_arr_time;
+			}
+		
+		//PILOT
+			if($('#flight_pic input').data("plt") == null && $('#flight_pic input').val() != ""){
+				const j_pilot = {};
+				j_pilot["lastName"] = $('#flight_pic input').val();
+				json["pilot"] = j_pilot;
+			}else if($('#flight_pic input').data("plt") !=null){
+				const j_pilot = {};
+				j_pilot["id"] = $('#flight_pic input').data("plt").id;
+				json["pilot"] = j_pilot;
 			}
 			
 		
@@ -164,6 +175,8 @@ $(document).ready(function() {
 		const selected_plt =  $('#flight_pic option[value="'+ $(this).val() +'"]').data('plt');
 		if(selected_plt != null){
 			$(this).data("plt", selected_plt);	
+		}else{
+			$(this).data("plt", null);
 		}
 		
 		const plt_data = $(this).data("plt");

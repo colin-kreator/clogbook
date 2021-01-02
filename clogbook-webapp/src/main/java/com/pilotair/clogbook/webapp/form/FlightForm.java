@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.pilotair.clogbook.core.entity.Aircraft;
 import com.pilotair.clogbook.core.entity.Airport;
+import com.pilotair.clogbook.core.entity.Pilot;
 
 public class FlightForm {
 
@@ -21,11 +22,13 @@ public class FlightForm {
 
 	private LocalTime	arrivalTime;
 
+	private Pilot		pilot;
+
 	@Override
 	public String toString() {
 		return "FlightForm [date=" + date + ", aircraft=" + aircraft + ", departureAirport=" + departureAirport
 		        + ", arrivalAirport=" + arrivalAirport + ", departureTime=" + departureTime + ", arrivalTime="
-		        + arrivalTime + "]";
+		        + arrivalTime + ", pilot=" + pilot + "]";
 	}
 
 	private LocalTime parseToLocalTime( String str ) {
@@ -79,6 +82,14 @@ public class FlightForm {
 
 	public void setArrivalTime( String arrivalTime ) {
 		this.arrivalTime = parseToLocalTime( arrivalTime );
+	}
+
+	public Pilot getPilot() {
+		return pilot;
+	}
+
+	public void setPilot( Pilot pilot ) {
+		this.pilot = pilot;
 	}
 
 }
