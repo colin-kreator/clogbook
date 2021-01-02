@@ -30,13 +30,9 @@ public class FlightResource {
 	@PostMapping
 	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'flight:create')" )
 	public Flight add( @RequestBody FlightForm flightForm, Authentication auth ) {
-		System.err.println( "IN ADD of flightResource" );
-		System.err.println( flightForm );
-
-		Flight flight = new Flight();
-		flight.setId( 69 );
-
-		return flight;
+		Flight flight = flightForm.createFlight();
+		logger.info( String.format( "User %s is saving a new flight : %s", auth.getName(), flight.toString() ) );
+		return flightService.insertFlight( flight, ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );
 	}
 
 	/**
@@ -64,6 +60,14 @@ public class FlightResource {
 	public List<Flight> getAllFlights( Authentication auth ) {
 		logger.info( String.format( "User %s requests all flights", auth.getName() ) );
 		return flightService.getAllFlights();
+	}
+
+	@GetMapping( "/simtype" )
+	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'flight:read')" )
+	public List<String> getUserSimTypes( Authentication auth ) {
+		logger.info( String.format( "User %s is getting its sim types", auth.getName() ) );
+		return flightService.getUserSimTypes( ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );
+
 	}
 
 }

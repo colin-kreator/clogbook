@@ -10,4 +10,8 @@ public interface AircraftService {
 	List<Aircraft> getAllByUser( Integer userId );
 
 	List<AircraftModel> getAllModelsByUser( Integer userId );
+
+	Aircraft insertAircraft( Aircraft aircraft );
+
+	AircraftModel insertAircraftModel( AircraftModel aircraftModel );
 }

@@ -10,6 +10,8 @@ import com.pilotair.clogbook.core.entity.Pilot;
 @Repository
 public interface PilotRepository extends JpaRepository<Pilot, Integer> {
 
-	List<Pilot> findByOwnerPilotId( int ownerId );
+	List<Pilot> findByOwnerPilotId( Integer ownerId );
+
+	Pilot findByOwnerPilotIdAndLastName( Integer ownerId, String lastName );
 
 }

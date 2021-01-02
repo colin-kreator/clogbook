@@ -50,7 +50,7 @@ public class ClogbookWebappApplication {
 		Flight f = createAFlight();
 		f.setUserId( userService.getByUserName( "colin.lefebvre1@gmail.com" ).getId() );
 		System.out.println( "will insert flight " + f );
-		flightService.insertFlight( f );
+		flightService.insertFlight( f, f.getUserId() );
 
 		return new Object();
 	}

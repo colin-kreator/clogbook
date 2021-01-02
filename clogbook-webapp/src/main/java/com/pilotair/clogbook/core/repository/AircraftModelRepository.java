@@ -11,4 +11,6 @@ import com.pilotair.clogbook.core.entity.AircraftModel;
 public interface AircraftModelRepository extends JpaRepository<AircraftModel, Integer> {
 
 	List<AircraftModel> findByUserId( Integer userId );
+
+	AircraftModel findByUserIdAndCustomName( Integer userId, String customName );
 }

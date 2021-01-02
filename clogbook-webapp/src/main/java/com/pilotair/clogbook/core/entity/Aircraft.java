@@ -1,6 +1,5 @@
 package com.pilotair.clogbook.core.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +19,7 @@ public class Aircraft {
 	@Column( name = "act_id" )
 	private Integer			id;
 
-	@ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+	@ManyToOne( fetch = FetchType.EAGER )
 	@JoinColumn( name = "act_aml_id" )
 	private AircraftModel	aircraftModel;
 
@@ -140,7 +139,7 @@ public class Aircraft {
 	 *            the registration to set
 	 */
 	public void setRegistration( String registration ) {
-		this.registration = registration;
+		this.registration = registration.toUpperCase();
 	}
 
 	/**

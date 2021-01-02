@@ -29,4 +29,15 @@ public class AircraftServiceImpl implements AircraftService {
 		return aircraftModelRepository.findByUserId( userId );
 	}
 
+	@Override
+	public Aircraft insertAircraft( Aircraft aircraft ) {
+
+		return aircraftRepository.save( aircraft );
+	}
+
+	@Override
+	public AircraftModel insertAircraftModel( AircraftModel aircraftModel ) {
+		return aircraftModelRepository.save( aircraftModel );
+	}
+
 }

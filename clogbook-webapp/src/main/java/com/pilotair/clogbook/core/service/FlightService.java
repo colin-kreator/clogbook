@@ -6,12 +6,14 @@ import com.pilotair.clogbook.core.entity.Flight;
 
 public interface FlightService {
 
-	Flight insertFlight( Flight flight );
+	Flight insertFlight( Flight flight, Integer userId );
 
 	List<Flight> getFlightsByUser( Integer userId );
 
 	List<Flight> getAllFlights();
 
 	Flight updateFlight( Flight flight );
+
+	List<String> getUserSimTypes( Integer userId );
 
 }

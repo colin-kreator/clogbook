@@ -12,4 +12,5 @@ public interface AircraftRepository extends JpaRepository<Aircraft, Integer> {
 
 	List<Aircraft> findByUserId( Integer userId );
 
+	Aircraft findByUserIdAndRegistration( Integer userId, String registration );
 }

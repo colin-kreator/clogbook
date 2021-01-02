@@ -1,30 +1,18 @@
 $(document).ready(function() {
     
 	$("#button_save_newflight").click(function(){
-		printObjects();
+		recordFlight();
 	});
 
-	function printObjects(){
-		console.log('Aircraft : '+ $("#flight_aircraft .reg input").data("act") );	
-		console.log( $("#flight_aircraft .reg input").data("act"));
-		console.log( $("#flight_aircraft .reg input").val());
-		console.log('AircraftModel : '+ $('#flight_aircraft .type input').data("am"));
-		console.log($('#flight_aircraft .type input').data("am"));
-		console.log($('#flight_aircraft .type input').val());
-		console.log('Pilot : '+ $('#flight_pic input').data("plt"));
-		console.log($('#flight_pic input').data("plt"));
-		console.log($('#flight_pic input').val());
-		console.log('Departure : '+ $("#flight_departure .place input").data("apt") );	
-		console.log($("#flight_departure .place input").data("apt"));
-		console.log('Arrival : '+ $("#flight_arrival .place input").data("apt") );	
-		console.log($("#flight_arrival .place input").data("apt"));
+	function recordFlight(){
 		
-		const checker = $("#modal_newflight .is-danger");
-		if(checker.length > 0) console.log("haha corige tes erreurs");
+		
+		const checker = $("#modal_newflight .is-danger:visible");
+		if(checker.length > 0) {
+			console.log("haha corige tes erreurs");
+			alert("Please correct the fileds in red before saving the flight");
+		}
 		else{
-			console.log("will try to send form data");
-		
-			
 			$.ajax({
 				type: "POST",
 		        data: createJsonToSend(),
@@ -35,14 +23,23 @@ $(document).ready(function() {
 			})
 			.done(function(response_flight){
 				alert("flight has been added, id="+response_flight.id);
-				
+				//TODO ajouter le vol en tete de tableau
 			})
 			.fail(function(){
 				alert("DTC");
 			});
 		}
-		
 	}
+	
+	$("#actualFlight, #simulator").click(function(){
+		if($('#actualFlight').is(':checked')){
+			$('.flight-only').removeClass('is-hidden');
+			$('.sim-only').addClass('is-hidden');
+		}else{
+			$('.flight-only').addClass('is-hidden');
+			$('.sim-only').removeClass('is-hidden');
+		}
+	});
 	
 	function createJsonToSend(){
 		let json = {};
@@ -51,22 +48,24 @@ $(document).ready(function() {
 			const j_date = $("#flight_date input").val();
 			json["date"] = j_date;
 		
-		//AIRCRAFT
+		if($('#actualFlight').is(':checked')){
+		
+			//AIRCRAFT
+		
+			const j_aircraft = {};
+			const j_aircraftmodel = {};
+			if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
+				j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
+				j_aircraft["aircraftModel"] = j_aircraftmodel;
+			}else if($('#flight_aircraft .type input').data("am") != null){
+				j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
+				j_aircraft["aircraftModel"] = j_aircraftmodel;
+			}
+			
 			if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
-				const j_aircraft = {};
-				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val();
-				if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
-					const j_aircraftmodel = {};
-					j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
-					j_aircraft["aircraftModel"] = j_aircraftmodel;
-				}else if($('#flight_aircraft .type input').data("am") != null){
-					const j_aircraftmodel = {};
-					j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
-					j_aircraft["aircraftModel"] = j_aircraftmodel;
-				}
+				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val().toUpperCase();
 				json["aircraft"] = j_aircraft;
 			}else if($("#flight_aircraft .reg input").data("act") != null){
-				const j_aircraft = {};
 				j_aircraft["id"] = $("#flight_aircraft .reg input").data("act").id;
 				json["aircraft"] = j_aircraft;
 			}
@@ -102,6 +101,64 @@ $(document).ready(function() {
 				json["pilot"] = j_pilot;
 			}
 			
+		//Take offs and landings
+			if($('#flight_to-ldg .to-day input').val()!=""){
+				json["dayTO"] = $('#flight_to-ldg .to-day input').val();
+			}
+			if($('#flight_to-ldg .to-night input').val()!=""){
+				json["nightTO"] = $('#flight_to-ldg .to-night input').val();
+			}
+			if($('#flight_to-ldg .ldg-day input').val()!=""){
+				json["dayLdg"] = $('#flight_to-ldg .ldg-day input').val();
+			}
+			if($('#flight_to-ldg .ldg-night input').val()!=""){
+				json["nightLdg"] = $('#flight_to-ldg .ldg-night input').val();
+			}
+			
+		//FLIGHT CONDITIONS
+			json["multiPilot"] = $('#MP_CB').is(':checked');
+			json["ifrFlight"] = $('#IFR_CB').is(':checked');
+			json["multiEngine"] = $('#ME_CB').is(':checked');
+		
+		//FLIGHT TIMES
+			const j_totalTime = $('.flight_time .total-time input').val();
+			if(j_totalTime != "") json['totalTime'] = timeInMin(j_totalTime);
+			
+			const j_nightTime = $('.flight_time .night-time input').val();
+			if(j_nightTime != "") json['nightTime'] = timeInMin(j_nightTime);
+			
+			const j_instrumentTime = $('.flight_time .ifr-time input').val();
+			if(j_instrumentTime != "") json['instrumentTime'] = timeInMin(j_instrumentTime);
+			
+			const j_crossCountryTime = $('.flight_time .xc-time input').val();
+			if(j_crossCountryTime != "") json['crossCountryTime'] = timeInMin(j_crossCountryTime);
+			
+			const j_picTime = $('.flight_time .pic-time input').val();
+			if(j_picTime != "") json['picTime'] = timeInMin(j_picTime);
+			
+			const j_dualTime = $('.flight_time .dual-time input').val();
+			if(j_dualTime != "") json['dualTime'] = timeInMin(j_dualTime);
+			
+			const j_copilotTime = $('.flight_time .copilot-time input').val();
+			if(j_copilotTime != "") json['copilotTime'] = timeInMin(j_copilotTime);
+			
+			const j_instructorTime = $('.flight_time .instructor-time input').val();
+			if(j_instructorTime != "") json['instructorTime'] = timeInMin(j_instructorTime);
+			
+		}else{
+			const j_simType = $('.sim .sim-type input').val();
+			if(j_simType != "") json["simType"] = j_simType;
+			
+			const j_simTime = $('.sim .sim-time input').val();
+			if(j_simTime != "") json['simTime'] = timeInMin(j_simTime);
+						
+		}
+		
+		
+		
+		//REMARKS
+			const j_remarks = $('#remarks input').val();
+			if(j_remarks!="") json['remarks'] = j_remarks;
 		
 		console.log(JSON.stringify( json));
 		
@@ -136,6 +193,19 @@ $(document).ready(function() {
 		}else{
 			$("#remarks .help").addClass("is-dark");
 			$("#remarks .help").removeClass("is-danger");
+			$(this).removeClass("is-danger");
+		}
+	});
+	
+	$(".sim .sim-type input").on('input', function(){
+		const helper = $('#sim_type_helper');
+		if($(this).val().length > 30){
+			helper.removeClass("has-text-dark");
+			helper.addClass("has-text-danger");
+			$(this).addClass("is-danger");
+		}else{
+			helper.addClass("has-text-dark");
+			helper.removeClass("has-text-danger");
 			$(this).removeClass("is-danger");
 		}
 	});
@@ -214,7 +284,7 @@ $(document).ready(function() {
 		validateDateElement($('#flight_date input'), $('#flight_date .help'));
     });
 
-    //Validation du champs dep time
+    //Validation des champs dep et arr time
     $('#flight_departure .time input, #flight_arrival .time input').on('input', function(){
 		validateFlightTimeElement($(this));
     });
@@ -225,10 +295,8 @@ $(document).ready(function() {
     });
     
     //Validation des champs temps de vol
-    $(".flight_time input").each(function(){
-        $(this).on('input', function(){
+    $(".flight_time input, .sim .sim-time input").on('input', function(){
             validateFlightTimeElement($(this));
-        });
     });
 
     //capture du clic sur le checkbox IFR
@@ -429,6 +497,7 @@ $(document).ready(function() {
 		initializeAircraftDataList();
 		initializeAircraftModelsDataList();
 		initializePilotDataList();
+		initializeSimTypesDataList();
 		
         //capture de la date du jour et affichage dans la modale
         const today = new Date();
@@ -450,6 +519,10 @@ $(document).ready(function() {
         validateDateElement($('#flight_date input'), $('#flight_date .help'));
     }
 
+	function timeInMin(timeString){
+		return timeString.split(':')[0] * 60 + timeString.split(':')[1] * 1 ; 
+	}
+
 	function initializeAircraftModelsDataList(){
 		$("#act_typ_datalist").empty();
 		$.ajax({
@@ -467,6 +540,23 @@ $(document).ready(function() {
 			alert("It was not possible to load your aircraft model list");
 		});
 	}
+	
+	function initializeSimTypesDataList(){
+		$("#sim_type_list").empty();
+		$.ajax({
+			url:"../api/flight/simtype",
+			method:"GET",
+			dataType:"json"
+		})
+		.done(function(response){
+			for(ty of response){
+				$("#sim_type_list").append($("<option>").attr('value', ty));
+			}
+		})
+		.fail(function(){
+			alert("It was not possible to load the previous simulator types");
+		});
+	}
 
 	function initializeAircraftDataList(){
 		$("#act_reg_datalist").empty();
@@ -477,7 +567,12 @@ $(document).ready(function() {
 		})
 		.done(function(response){
 			for(act of response){
-				$("#act_reg_datalist").append($("<option>").attr('value', act.registration).attr('label', act.aircraftModel.customName).data("act", act));
+				if(act.aircraftModel != null){
+					$("#act_reg_datalist").append($("<option>").attr('value', act.registration).attr('label', act.aircraftModel.customName).data("act", act));	
+				}else{
+					$("#act_reg_datalist").append($("<option>").attr('value', act.registration).data("act", act));
+				}
+				
 			}
 			
 		})
@@ -536,13 +631,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function ajaxGetAirport(url){
-		return $.ajax({
-			url:url,
-			method:"GET",
-			dataType:"json"
-		});
-	}
+	
 
 	function updateAirportSrSs(element){
 		
