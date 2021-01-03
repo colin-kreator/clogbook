@@ -17,7 +17,21 @@ public class PilotServiceImpl implements PilotService {
 	private PilotRepository pilotRepository;
 
 	@Override
-	public Pilot add( Pilot pilot ) {
+	public Pilot save( Pilot pilot, Integer userId ) {
+		pilot.setOwnerPilotId( userId );
+		if ( pilot.getId() == null ) {
+			/*
+			 * Si le pilote semble etre nouveau (id null), on va voir si l'utilisateur n'a 
+			 * pas déjà un pilote avec le même nom que celui donné
+			 */
+			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastName( userId, pilot.getLastName() );
+			if ( pltCheck != null ) {
+				pilot.setId( pltCheck.getId() );
+				return pltCheck;
+			}
+
+		}
+
 		return pilotRepository.save( pilot );
 	}
 

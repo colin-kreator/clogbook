@@ -52,22 +52,21 @@ $(document).ready(function() {
 		
 			//AIRCRAFT
 		
-			const j_aircraft = {};
+			let j_aircraft = {};
+			if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
+				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val().toUpperCase();
+				json["aircraft"] = j_aircraft;
+			}else if($("#flight_aircraft .reg input").data("act") != null){
+				j_aircraft = $("#flight_aircraft .reg input").data("act");
+				json["aircraft"] = j_aircraft;
+			}
+		
 			const j_aircraftmodel = {};
 			if($('#flight_aircraft .type input').data("am") == null && $('#flight_aircraft .type input').val() != ""){
 				j_aircraftmodel ["customName"] = $('#flight_aircraft .type input').val();
 				j_aircraft["aircraftModel"] = j_aircraftmodel;
 			}else if($('#flight_aircraft .type input').data("am") != null){
-				j_aircraftmodel ["id"] = $('#flight_aircraft .type input').data("am").id;
-				j_aircraft["aircraftModel"] = j_aircraftmodel;
-			}
-			
-			if($("#flight_aircraft .reg input").data("act") == null && $("#flight_aircraft .reg input").val() != ""){
-				j_aircraft ["registration"] = $("#flight_aircraft .reg input").val().toUpperCase();
-				json["aircraft"] = j_aircraft;
-			}else if($("#flight_aircraft .reg input").data("act") != null){
-				j_aircraft["id"] = $("#flight_aircraft .reg input").data("act").id;
-				json["aircraft"] = j_aircraft;
+				j_aircraft["aircraftModel"] = $('#flight_aircraft .type input').data("am");
 			}
 		
 		//AIRPORTS
@@ -96,9 +95,7 @@ $(document).ready(function() {
 				j_pilot["lastName"] = $('#flight_pic input').val();
 				json["pilot"] = j_pilot;
 			}else if($('#flight_pic input').data("plt") !=null){
-				const j_pilot = {};
-				j_pilot["id"] = $('#flight_pic input').data("plt").id;
-				json["pilot"] = j_pilot;
+				json["pilot"] = $('#flight_pic input').data("plt");
 			}
 			
 		//Take offs and landings
@@ -263,8 +260,15 @@ $(document).ready(function() {
 			if(selected_aircraft != null){
 				$(this).data("act", selected_aircraft);	
 				$('#flight_aircraft .type input').data("am", selected_aircraft.aircraftModel);
-				$('#flight_aircraft .type input').val(selected_aircraft.aircraftModel.customName);
-				$('#flight_aircraft .type input').prop( "disabled", true );
+				if(selected_aircraft.aircraftModel != null){
+					$('#flight_aircraft .type input').val(selected_aircraft.aircraftModel.customName);
+					$('#flight_aircraft .type input').prop( "disabled", true );
+				}else{
+					$('#flight_aircraft .type input').data("am", null);
+					$('#flight_aircraft .type input').val("");
+					$('#flight_aircraft .type input').prop( "disabled", false );
+				}
+				
 			}else{
 				$(this).data("act", null);	
 				$('#flight_aircraft .type input').data("am", null);
@@ -532,7 +536,16 @@ $(document).ready(function() {
 		})
 		.done(function(response){
 			for(am of response){
-				$("#act_typ_datalist").append($("<option>").attr('value', am.customName).attr('label', am.brand+" "+am.model).data("am", am));
+				if(am.brand != null && am.model != null){
+					$("#act_typ_datalist").append($("<option>").attr('value', am.customName).attr('label', am.brand+" "+am.model).data("am", am));
+				}else if(am.brand != null){
+					$("#act_typ_datalist").append($("<option>").attr('value', am.customName).attr('label', am.brand).data("am", am));
+				}else if(am.model != null){
+					$("#act_typ_datalist").append($("<option>").attr('value', am.customName).attr('label', am.model).data("am", am));
+				}else{
+					$("#act_typ_datalist").append($("<option>").attr('value', am.customName).data("am", am));
+				}
+					
 			}
 			
 		})

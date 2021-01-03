@@ -11,7 +11,9 @@ public interface AircraftService {
 
 	List<AircraftModel> getAllModelsByUser( Integer userId );
 
-	Aircraft insertAircraft( Aircraft aircraft );
+	Aircraft saveAircraft( Aircraft aircraft, Integer userId );
 
-	AircraftModel insertAircraftModel( AircraftModel aircraftModel );
+	AircraftModel saveAircraftModel( AircraftModel aircraftModel, Integer userId );
+
+	Aircraft getById( Integer id );
 }

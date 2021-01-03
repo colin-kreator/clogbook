@@ -7,7 +7,7 @@ import com.pilotair.clogbook.core.entity.Pilot;
 
 public interface PilotService {
 
-	Pilot add( Pilot pilot );
+	Pilot save( Pilot pilot, Integer userId );
 
 	List<PilotDto> getDtoByOwnerId( int ownerId );
 
