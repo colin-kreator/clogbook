@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pilotair.clogbook.core.dto.PilotDto;
 
 @Entity
 @Table( name = "T_FLIGHT_FLT" )
@@ -33,6 +39,11 @@ public class Flight {
 	@JoinColumn( name = "flt_plt_id" )
 	private Pilot		pilot;
 
+	@Transient
+	@JsonSerialize
+	@JsonDeserialize
+	private PilotDto	pilotDto;
+
 	@ManyToOne( fetch = FetchType.LAZY )
 	@JoinColumn( name = "flt_departure_apt_id" )
 	private Airport		departureAirport;
@@ -42,12 +53,15 @@ public class Flight {
 	private Airport		arrivalAirport;
 
 	@Column( name = "flt_date", columnDefinition = "DATE" )
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yy" )
 	private LocalDate	date;
 
 	@Column( name = "flt_departure_time", columnDefinition = "TIME" )
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "HH:mm" )
 	private LocalTime	departureTime;
 
 	@Column( name = "flt_arrival_time", columnDefinition = "TIME" )
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "HH:mm" )
 	private LocalTime	arrivalTime;
 
 	@Column( name = "flt_day_to_nr" )
@@ -107,6 +121,9 @@ public class Flight {
 	@Column( name = "flt_sim_time" )
 	private Short		simTime;
 
+	@Column( name = "flt_cross_country_time" )
+	private Short		crossCountryTime;
+
 	/**
 	 * 
 	 */
@@ -147,7 +164,8 @@ public class Flight {
 	        LocalDate date, LocalTime departureTime, LocalTime arrivalTime, Short dayTO, Short nightTO, Short dayLdg,
 	        Short nightLdg, Boolean multiPilot, Boolean multiEngine, Short singleEngineTime, Short multiEngineTime,
 	        Short nightTime, Short instrumentTime, Short totalTime, Short picTime, Short multiPilotTime,
-	        Short copilotTime, Short instructorTime, Short dualTime, String remarks, String simType, Short simTime ) {
+	        Short copilotTime, Short instructorTime, Short dualTime, String remarks, String simType, Short simTime,
+	        Short crossCountryTime ) {
 		super();
 		this.userId = userId;
 		this.aircraft = aircraft;
@@ -176,6 +194,21 @@ public class Flight {
 		this.remarks = remarks;
 		this.simType = simType;
 		this.simTime = simTime;
+		this.crossCountryTime = crossCountryTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Flight [id=" + id + ", userId=" + userId + ", aircraft=" + aircraft + ", pilot=" + pilot + ", pilotDto="
+		        + pilotDto + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", date="
+		        + date + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", dayTO=" + dayTO
+		        + ", nightTO=" + nightTO + ", dayLdg=" + dayLdg + ", nightLdg=" + nightLdg + ", multiPilot="
+		        + multiPilot + ", multiEngine=" + multiEngine + ", singleEngineTime=" + singleEngineTime
+		        + ", multiEngineTime=" + multiEngineTime + ", nightTime=" + nightTime + ", instrumentTime="
+		        + instrumentTime + ", totalTime=" + totalTime + ", picTime=" + picTime + ", multiPilotTime="
+		        + multiPilotTime + ", copilotTime=" + copilotTime + ", instructorTime=" + instructorTime + ", dualTime="
+		        + dualTime + ", remarks=" + remarks + ", simType=" + simType + ", simTime=" + simTime
+		        + ", crossCountryTime=" + crossCountryTime + "]";
 	}
 
 	@Override
@@ -186,6 +219,7 @@ public class Flight {
 		result = prime * result + ( ( arrivalAirport == null ) ? 0 : arrivalAirport.hashCode() );
 		result = prime * result + ( ( arrivalTime == null ) ? 0 : arrivalTime.hashCode() );
 		result = prime * result + ( ( copilotTime == null ) ? 0 : copilotTime.hashCode() );
+		result = prime * result + ( ( crossCountryTime == null ) ? 0 : crossCountryTime.hashCode() );
 		result = prime * result + ( ( date == null ) ? 0 : date.hashCode() );
 		result = prime * result + ( ( dayLdg == null ) ? 0 : dayLdg.hashCode() );
 		result = prime * result + ( ( dayTO == null ) ? 0 : dayTO.hashCode() );
@@ -241,6 +275,11 @@ public class Flight {
 			if ( other.copilotTime != null )
 				return false;
 		} else if ( !copilotTime.equals( other.copilotTime ) )
+			return false;
+		if ( crossCountryTime == null ) {
+			if ( other.crossCountryTime != null )
+				return false;
+		} else if ( !crossCountryTime.equals( other.crossCountryTime ) )
 			return false;
 		if ( date == null ) {
 			if ( other.date != null )
@@ -785,17 +824,27 @@ public class Flight {
 		this.simTime = simTime;
 	}
 
-	@Override
-	public String toString() {
-		return "Flight [id=" + id + ", userId=" + userId + ", aircraft=" + aircraft + ", pilot=" + pilot
-		        + ", departureAirport=" + departureAirport + ", arrivalAirport=" + arrivalAirport + ", date=" + date
-		        + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", dayTO=" + dayTO
-		        + ", nightTO=" + nightTO + ", dayLdg=" + dayLdg + ", nightLdg=" + nightLdg + ", multiPilot="
-		        + multiPilot + ", multiEngine=" + multiEngine + ", singleEngineTime=" + singleEngineTime
-		        + ", multiEngineTime=" + multiEngineTime + ", nightTime=" + nightTime + ", instrumentTime="
-		        + instrumentTime + ", totalTime=" + totalTime + ", picTime=" + picTime + ", multiPilotTime="
-		        + multiPilotTime + ", copilotTime=" + copilotTime + ", instructorTime=" + instructorTime + ", dualTime="
-		        + dualTime + ", remarks=" + remarks + ", simType=" + simType + ", simTime=" + simTime + "]";
+	/**
+	 * @return the simTime
+	 */
+	public Short getCrossCountryTime() {
+		return crossCountryTime;
+	}
+
+	/**
+	 * @param simTime
+	 *            the simTime to set
+	 */
+	public void setCrossCountryTime( Short crossCountryTime ) {
+		this.crossCountryTime = crossCountryTime;
+	}
+
+	public PilotDto getPilotDto() {
+		return pilotDto;
+	}
+
+	public void setPilotDto( PilotDto pilotDto ) {
+		this.pilotDto = pilotDto;
 	}
 
 }

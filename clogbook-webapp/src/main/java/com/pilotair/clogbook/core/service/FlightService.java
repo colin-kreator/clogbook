@@ -10,10 +10,14 @@ public interface FlightService {
 
 	List<Flight> getFlightsByUser( Integer userId );
 
+	List<Flight> getLast20FlightsByUser( Integer userId );
+
 	List<Flight> getAllFlights();
 
 	Flight updateFlight( Flight flight );
 
 	List<String> getUserSimTypes( Integer userId );
+
+	void deleteByUserId( Integer userId );
 
 }

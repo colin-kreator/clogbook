@@ -155,457 +155,48 @@ xmlns:th="http://www.thymeleaf.org">
               </div>
             </div>
           </div>
-
-
         <!--Section : stats-->
 
 
+		
+
+
         <!-- tableau vols -->
-          <!--div class="column is-narrow">
+        <div class="columns is-centered" style="margin-top: 20px">
+          <div class="column is-narrow">
             <div class="box">
-              <div class="table-wrapper">
-                <table class="table is-hoverable is-narrow ">
+            <div class="title">Last 20 flights : </div>
+              <div class="table-container">
+                <table class="table is-hoverable is-narrow is-fullwidth is-striped is-bordered" id="table_20_flights">
                   <thead class="has-text-centered">
                     <tr>
                       <td rowspan="2"><strong>Date</strong><br/>(dd/mm/yy)</td>
-                      <th colspan="2"><abbr title="Departure place">Dep</abbr></th>
-                      
-                      <th colspan="2"><abbr title="Arrival place">Arrival</abbr></th>
-                      
+                      <th colspan="2"><abbr title="Departure">Dep</abbr></th>
+                      <th colspan="2"><abbr title="Arrival">Arrival</abbr></th>
                       <th colspan="2">Aircraft</th>
-                      <th colspan="2"><abbr title="Single pilot">SP</abbr></th>
-
-                      <th rowspan="2"><abbr title="Multli pilot time">MP</abbr></th>
-                      <th rowspan="2"><abbr title="Total flight time">TT</abbr></th>
-                      <th rowspan="2"><abbr title="Pilot in command Name">PIC</abbr></th>
-                      <th colspan="2"><abbr title="Take offs">T/Os</abbr></th>
-                      <th colspan="2"><abbr title="Landings">LDGs</abbr></th>
-                      <th colspan="3">Op. times</th>
-                      <th colspan="4">Pilot fonciton times</th>                      
-                      <th colspan="2">Sim sessions</th>
-                      <th>Remarks</th>
+                      <th rowspan="2">PIC<br/>Name</th>
+                      <th colspan="3"><abbr title="Flight times">Flight times</abbr></th>
+                      <th rowspan="2"><abbr title="Flight conditions">Flight conditions</abbr></th>
+                      <th colspan="2">Sim session</th>
+                      <th rowspan="2"><br/>Remarks</th>
                     </tr>
                     <tr>
                       <th><abbr title="Departure place">Place</abbr></th>
                       <th><abbr title="Departure time">Time</abbr></th>
                       <th><abbr title="Arrival place">Place</abbr></th>
                       <th><abbr title="Arrival time">Time</abbr></th>
-                      <th>Type</th>
-                      <th><abbr title="Registration">Reg.</abbr></th>
-                      <th><abbr title="Single engine">SE</abbr></th>
-                      <th><abbr title="Multi engine">ME</abbr></th>
-                      <th><abbr title="Day take off">DTO</abbr></th>
-                      <th><abbr title="Night take off">NTO</abbr></th>
-                      <th><abbr title="Day landing">DLD</abbr></th>
-                      <th><abbr title="Night landing">NLD</abbr></th>
-                      <th><abbr title="Night time">Night</abbr></th>
-                      <th><abbr title="Instrument time">IFR</abbr></th>
-                      <th><abbr title="Cross-country time">XC</abbr></th>
-                      <th><abbr title="Pic time">PIC</abbr></th>
-                      <th><abbr title="Co-pilot time">COPI</abbr></th>
-                      <th><abbr title="Dual time">DUAL</abbr></th>
-                      <th><abbr title="Instructor time">INSTR</abbr></th>
+                      <th><abbr title="Aircraft type">Type</abbr></th>
+                      <th><abbr title="Aircraft Registration">Reg.</abbr></th>
+                      <th><abbr title="Total time">Total time</abbr></th>
+                      <th><abbr title="Night time">Night time</abbr></th>
+                      <th><abbr title="Instrument time">IFR time</abbr></th>
                       <th><abbr title="Simulator type">Type</abbr></th>
                       <th><abbr title="Sim session time">Time</abbr></th>
-                      <th>Remarks</th>
+                      
                     </tr>
                   </thead>
                   
                   <tbody>
-                    <tr>
-                      <th>07/02/20</th>
-                      <td>EHAM</td>
-                      <td>19:58</td>
-                      <td>EGCC</td>
-                      <td>21:01</td>
-                      <td>E75</td>
-                      <td>GFBJK</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>1:03</td>
-                      <td>1:03</td>
-                      <td>D. HEALY</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>1:03</td>
-                      <td>1:03</td>
-                      <td>1:03</td>
-                      <td>-</td>
-                      <td>1:03</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PM</td>
-                    </tr>
-  
-                    <tr>
-                      <th>11/02/20</th>
-                      <td>EGCC</td>
-                      <td>06:45</td>
-                      <td>LFPG</td>
-                      <td>08:05</td>
-                      <td>E75</td>
-                      <td>GFBJB</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>1:20</td>
-                      <td>1:20</td>
-                      <td>D. HEALY</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>0:25</td>
-                      <td>1:20</td>
-                      <td>1:20</td>
-                      <td>-</td>
-                      <td>1:20</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
-                    <tr>
-                      <th>18/02/20</th>
-                      <td>LFQQ</td>
-                      <td>08:03</td>
-                      <td>LFQQ</td>
-                      <td>10:03</td>
-                      <td>DA40TDI</td>
-                      <td>FHZIC</td>
-                      <td><span class="icon is-black"><i class="fas fa-check"></i></span></td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>2:00</td>
-                      <td>Self</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>1</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>0:20</td>
-                      <td>2:00</td>
-                      <td>2:00</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>PF</td>
-                    </tr>
                   </tbody>
                 </table>
   
@@ -615,8 +206,8 @@ xmlns:th="http://www.thymeleaf.org">
   
             </div>
   
-          </div-->
-
+          </div>
+		</div>
     
 
         <!-- tableau vols -->
@@ -626,7 +217,7 @@ xmlns:th="http://www.thymeleaf.org">
 		<!-- Formulaire nouveau vol -->
 		
 		
-		<div class="modal is-active" id="modal_newflight">
+		<div class="modal" id="modal_newflight">
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">

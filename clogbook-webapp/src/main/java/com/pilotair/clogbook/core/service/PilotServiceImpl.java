@@ -31,8 +31,32 @@ public class PilotServiceImpl implements PilotService {
 			}
 
 		}
-
 		return pilotRepository.save( pilot );
+	}
+
+	@Override
+	public Pilot save( PilotDto pilotDto, Integer userId ) {
+		// On sauvegarde le piloteDto seulement si il n'existe pas
+
+		if ( pilotDto.getId() == null ) {
+			/*
+			 * Si le pilote semble etre nouveau (id null), on va voir si l'utilisateur n'a 
+			 * pas déjà un pilote avec le même nom que celui donné
+			 */
+			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastName( userId, pilotDto.getLastName() );
+			if ( pltCheck != null ) {
+				return pltCheck;
+			}
+
+			/*Si le pilot n'existe vraiment pas on le crée*/
+			Pilot pilot = new Pilot();
+			pilot.setLastName( pilotDto.getLastName() );
+			pilot.setFirstName( pilotDto.getFirstName() );
+			pilot.setOwnerPilotId( userId );
+
+			return pilotRepository.save( pilot );
+		}
+		return pilotRepository.findById( pilotDto.getId() ).orElse( null );
 	}
 
 	@Override

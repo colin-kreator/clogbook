@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS T_FLIGHT_FLT (
   flt_remarks varchar,
   flt_sim_type varchar(50),
   flt_sim_time smallint,
+  flt_cross_country_time smallint,
   FOREIGN KEY (flt_usr_id) REFERENCES TS_USER_USR (usr_id),
   FOREIGN KEY (flt_departure_apt_id) REFERENCES TR_AIRPORT_APT (apt_id),
   FOREIGN KEY (flt_arrival_apt_id) REFERENCES TR_AIRPORT_APT (apt_id),

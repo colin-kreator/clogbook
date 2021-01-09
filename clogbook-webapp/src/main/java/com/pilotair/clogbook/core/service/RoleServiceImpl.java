@@ -2,11 +2,10 @@ package com.pilotair.clogbook.core.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pilotair.clogbook.core.entity.auth.Permission;
 import com.pilotair.clogbook.core.entity.auth.Role;
@@ -65,6 +64,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional( readOnly = true )
 	public Role getById( Integer id ) {
 		Role role = roleRepository.findById( id ).orElseThrow();
 		Hibernate.initialize( role.getPermissions() );

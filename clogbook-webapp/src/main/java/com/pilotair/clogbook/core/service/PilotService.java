@@ -15,4 +15,6 @@ public interface PilotService {
 
 	Pilot getById( int id );
 
+	Pilot save( PilotDto pilotDto, Integer userId );
+
 }

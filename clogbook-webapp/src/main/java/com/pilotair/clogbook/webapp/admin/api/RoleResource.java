@@ -30,12 +30,12 @@ public class RoleResource {
 	}
 
 	@GetMapping( path = "/{id}" )
-	public void getRole( @PathVariable( "id" ) Integer id ) {
-		roleService.getById( id );
+	public Role getRole( @PathVariable( "id" ) Integer id ) {
+		return roleService.getById( id );
 	}
 
 	@PostMapping
-	public void addRole( @RequestBody Role role ) {
-		roleService.add( role );
+	public Role addRole( @RequestBody Role role ) {
+		return roleService.add( role );
 	}
 }

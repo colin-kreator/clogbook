@@ -21,9 +21,11 @@ $(document).ready(function() {
 		        cache: false,
 		        url: "../api/flight"
 			})
-			.done(function(response_flight){
-				alert("flight has been added, id="+response_flight.id);
-				//TODO ajouter le vol en tete de tableau
+			.done(function(){
+				initializeLastFlightsList();
+				$('#modal_newflight').removeClass("is-active");
+				resetForm();
+				
 			})
 			.fail(function(){
 				alert("DTC");
@@ -93,9 +95,9 @@ $(document).ready(function() {
 			if($('#flight_pic input').data("plt") == null && $('#flight_pic input').val() != ""){
 				const j_pilot = {};
 				j_pilot["lastName"] = $('#flight_pic input').val();
-				json["pilot"] = j_pilot;
+				json["pilotDto"] = j_pilot;
 			}else if($('#flight_pic input').data("plt") !=null){
-				json["pilot"] = $('#flight_pic input').data("plt");
+				json["pilotDto"] = $('#flight_pic input').data("plt");
 			}
 			
 		//Take offs and landings
@@ -497,6 +499,11 @@ $(document).ready(function() {
     }
 
     function resetForm(){
+		//Reinitialise tous les champs
+	 	$('#modal_newflight input').val('');
+        $('#modal_newflight input').removeClass("is-danger")
+        $('#modal_newflight input').removeClass("is-success")
+	
 		// Va chercher les données pour charger les datalists
 		initializeAircraftDataList();
 		initializeAircraftModelsDataList();
@@ -514,9 +521,7 @@ $(document).ready(function() {
                     ((''+month).length<2 ? '0' : '') + month + "/" +
                     ye;
 
-        $('#modal_newflight input').val('');
-        $('#modal_newflight input').removeClass("is-danger")
-        $('#modal_newflight input').removeClass("is-success")
+       
         //affichage de la date dans le champs date
         $('#flight_date input').val( out);
         $('#flight_date .help').text('');

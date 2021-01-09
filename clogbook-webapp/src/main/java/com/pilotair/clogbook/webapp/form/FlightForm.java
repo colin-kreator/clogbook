@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pilotair.clogbook.core.dto.PilotDto;
 import com.pilotair.clogbook.core.entity.Aircraft;
 import com.pilotair.clogbook.core.entity.Airport;
 import com.pilotair.clogbook.core.entity.Flight;
-import com.pilotair.clogbook.core.entity.Pilot;
 
 public class FlightForm {
 
@@ -26,7 +26,7 @@ public class FlightForm {
 	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "HH:mm" )
 	private LocalTime	arrivalTime;
 
-	private Pilot		pilot;
+	private PilotDto	pilotDto;
 
 	private Short		dayTO;
 
@@ -71,11 +71,12 @@ public class FlightForm {
 		if ( multiPilot != null && multiPilot )
 			multiPilotTime = totalTime;
 
-		flight = new Flight( null, aircraft, pilot, departureAirport, arrivalAirport, date, departureTime,
+		flight = new Flight( null, aircraft, null, departureAirport, arrivalAirport, date, departureTime,
 		        arrivalTime, dayTO, nightTO, dayLdg, nightLdg, multiPilot, multiEngine, singleEngineTime,
 		        multiEngineTime, nightTime, instrumentTime, totalTime, picTime, multiPilotTime, copilotTime,
-		        instructorTime, dualTime, remarks, simType, simTime );
+		        instructorTime, dualTime, remarks, simType, simTime, crossCountryTime );
 
+		flight.setPilotDto( pilotDto );
 		return flight;
 	}
 
@@ -83,7 +84,8 @@ public class FlightForm {
 	public String toString() {
 		return "FlightForm [date=" + date + ", aircraft=" + aircraft + ", departureAirport=" + departureAirport
 		        + ", arrivalAirport=" + arrivalAirport + ", departureTime=" + departureTime + ", arrivalTime="
-		        + arrivalTime + ", pilot=" + pilot + ", dayTO=" + dayTO + ", nightTO=" + nightTO + ", dayLdg=" + dayLdg
+		        + arrivalTime + ", pilotDto=" + pilotDto + ", dayTO=" + dayTO + ", nightTO=" + nightTO + ", dayLdg="
+		        + dayLdg
 		        + ", nightLdg=" + nightLdg + ", multiPilot=" + multiPilot + ", ifrFlight=" + ifrFlight
 		        + ", multiEngine=" + multiEngine + ", totalTime=" + totalTime + ", nightTime=" + nightTime
 		        + ", instrumentTime=" + instrumentTime + ", crossCountryTime=" + crossCountryTime + ", picTime="
@@ -115,7 +117,7 @@ public class FlightForm {
 		result = prime * result + ( ( nightTO == null ) ? 0 : nightTO.hashCode() );
 		result = prime * result + ( ( nightTime == null ) ? 0 : nightTime.hashCode() );
 		result = prime * result + ( ( picTime == null ) ? 0 : picTime.hashCode() );
-		result = prime * result + ( ( pilot == null ) ? 0 : pilot.hashCode() );
+		result = prime * result + ( ( pilotDto == null ) ? 0 : pilotDto.hashCode() );
 		result = prime * result + ( ( remarks == null ) ? 0 : remarks.hashCode() );
 		result = prime * result + ( ( simTime == null ) ? 0 : simTime.hashCode() );
 		result = prime * result + ( ( simType == null ) ? 0 : simType.hashCode() );
@@ -232,10 +234,10 @@ public class FlightForm {
 				return false;
 		} else if ( !picTime.equals( other.picTime ) )
 			return false;
-		if ( pilot == null ) {
-			if ( other.pilot != null )
+		if ( pilotDto == null ) {
+			if ( other.pilotDto != null )
 				return false;
-		} else if ( !pilot.equals( other.pilot ) )
+		} else if ( !pilotDto.equals( other.pilotDto ) )
 			return false;
 		if ( remarks == null ) {
 			if ( other.remarks != null )
@@ -383,16 +385,16 @@ public class FlightForm {
 	/**
 	 * @return the pilot
 	 */
-	public Pilot getPilot() {
-		return pilot;
+	public PilotDto getPilotDto() {
+		return pilotDto;
 	}
 
 	/**
 	 * @param pilot
 	 *            the pilot to set
 	 */
-	public void setPilot( Pilot pilot ) {
-		this.pilot = pilot;
+	public void setPilotDto( PilotDto pilotDto ) {
+		this.pilotDto = pilotDto;
 	}
 
 	/**

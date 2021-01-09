@@ -13,10 +13,15 @@ import com.pilotair.clogbook.core.entity.Flight;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
-	List<Flight> findByUserIdOrderByDateDesc( Integer userId );
+	List<Flight> findByUserIdOrderByDateDescDepartureTimeDesc( Integer userId );
 
+	List<Flight> findTop20ByUserIdOrderByDateDescDepartureTimeDesc( Integer userId );
+
+	/*Permet d'avoir la liste de simulateurs utilisés par l'utilisateur entre les 2 dates données*/
 	@Query( "select distinct f.simType from Flight f where f.userId = :userId and f.simType is not null and f.date between :datestart and :dateend order by f.simType" )
 	List<String> findDistinctSimTypeByUserId( @Param( value = "userId" ) Integer userId,
 	        @Param( value = "datestart" ) LocalDate dateStart,
 	        @Param( value = "dateend" ) LocalDate dateEnd );
+
+	void deleteByUserId( Integer userId );
 }

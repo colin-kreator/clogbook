@@ -36,6 +36,21 @@ public class FlightResource {
 	}
 
 	/**
+	 * Méthode qui permet de lister les 20 derniers vols de l'utilisateur qui le
+	 * demande
+	 * 
+	 * @param auth
+	 * @return la liste des 20 derniers vols de l'utilisateur loggué
+	 */
+	@GetMapping( "/top" )
+	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'flight:read')" )
+	public List<Flight> getLastUserFlights( Authentication auth ) {
+		logger.info( String.format( "User %s requests its last flights", auth.getName() ) );
+		Integer userId = ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId();
+		return flightService.getLast20FlightsByUser( userId );
+	}
+
+	/**
 	 * Méthode qui permet de lister tous les vols de l'utilisateur qui le
 	 * demande
 	 * 
