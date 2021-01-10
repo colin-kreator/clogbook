@@ -1,4 +1,4 @@
-package com.pilotair.clogbook.webapp.admin.api;
+package com.pilotair.clogbook.webapp.api;
 
 import java.util.List;
 

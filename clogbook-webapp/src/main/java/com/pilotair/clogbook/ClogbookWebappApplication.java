@@ -8,6 +8,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
@@ -25,8 +26,10 @@ import com.pilotair.clogbook.core.repository.PilotRepository;
 import com.pilotair.clogbook.core.repository.UserRepository;
 import com.pilotair.clogbook.core.service.AircraftService;
 import com.pilotair.clogbook.core.service.FlightService;
+import com.pilotair.clogbook.webapp.file.FileStorageProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties( { FileStorageProperties.class } )
 public class ClogbookWebappApplication {
 
 	public static void main( String[] args ) {
@@ -74,14 +77,14 @@ public class ClogbookWebappApplication {
 
 		flightService.deleteByUserId( colin.getId() );
 
-		Flight[] f = new Flight[5000];
+		Flight[] f = new Flight[50];
 		Random r = new Random();
 		for ( int i = 0; i < f.length; i++ ) {
 			f[i] = new Flight();
 
 			f[i].setDepartureTime( LocalTime.of( r.nextInt( 24 ), r.nextInt( 60 ) ) );
 
-			f[i].setDate( LocalDate.of( 2020, 12, r.nextInt( 28 ) + 1 ) );
+			f[i].setDate( LocalDate.of( 1993, r.nextInt( 12 ) + 1, r.nextInt( 28 ) + 1 ) );
 
 			f[i].setTotalTime( (short) ( r.nextInt( 120 ) + 45 ) );
 
