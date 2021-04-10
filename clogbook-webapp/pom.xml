@@ -12,6 +12,7 @@
 	<groupId>com.pilotair.clogbook</groupId>
 	<artifactId>webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>clogbook-webapp</name>
 	<description>CLogbook web application</description>
 
@@ -95,6 +96,10 @@
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>3.0.3</version>
+        <configuration>
+        	<jdkVersion>11</jdkVersion>
+				  <appName>clogbook</appName>
+				</configuration>
       </plugin>
 		
 		
