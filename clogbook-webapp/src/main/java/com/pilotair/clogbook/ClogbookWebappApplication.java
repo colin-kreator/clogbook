@@ -56,7 +56,7 @@ public class ClogbookWebappApplication {
 
 	@Bean
 	@Autowired
-	public void LoadSampleFlights( FlightService flightService, UserRepository userRepository,
+	public Object LoadSampleFlights( FlightService flightService, UserRepository userRepository,
 	        PilotRepository pilotRepository, AirportRepository airportRepository,
 	        AircraftService aircraftService, AircraftRepository aircraftRepository ) {
 
@@ -129,6 +129,7 @@ public class ClogbookWebappApplication {
 			flightService.insertFlight( f[i], colin.getId() );
 		}
 
+		return new Object();
 	}
 
 }
