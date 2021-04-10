@@ -1,4 +1,10 @@
+let CONTEXT_PATH;
+let ABSOLUTE_PATH;
+
 $(document).ready(function() {
+
+	CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+	ABSOLUTE_PATH = window.location.origin + CONTEXT_PATH;
 
 	/*
 		LANCEMENT DE LA MISE A JOUR DES 20 Derniers vols
@@ -143,7 +149,7 @@ $(document).ready(function() {
 function initializeLastFlightsList() {
 	$("#table_20_flights tbody").empty();
 	$.ajax({
-		url: "../api/flight/top",
+		url: CONTEXT_PATH+"api/flight/top",
 		method: "GET",
 		dataType: "json"
 	})
@@ -208,7 +214,6 @@ function initializeLastFlightsList() {
 					$('<td>').text(flt.simType != null ? flt.simType : '-'),
 					$('<td>').text(simTime),
 					$('<td>').text(flt.remarks)
-					
 				);
 
 

@@ -23,7 +23,7 @@ public class HomeController {
 	private Logger						logger	= LoggerFactory.getLogger( HomeController.class );
 
 	@Autowired
-	private UserService		UserService;
+	private UserService					UserService;
 
 	@Autowired
 	private SecurityServiceInterface	securityService;
@@ -47,6 +47,7 @@ public class HomeController {
 	public String signup( @ModelAttribute @Valid final SignupForm signupForm,
 	        final BindingResult results,
 	        final RedirectAttributes redirectAttributes ) {
+		System.err.println( "SIGN UP" );
 		logger.info( "Signup request" );
 		if ( results.hasErrors() ) {
 			redirectAttributes
