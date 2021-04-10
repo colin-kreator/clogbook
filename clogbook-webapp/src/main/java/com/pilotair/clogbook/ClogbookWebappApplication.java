@@ -60,6 +60,8 @@ public class ClogbookWebappApplication {
 	        PilotRepository pilotRepository, AirportRepository airportRepository,
 	        AircraftService aircraftService, AircraftRepository aircraftRepository ) {
 
+		if ( true )
+			return null;
 		User colin = userRepository.findByUsername( "colin.lefebvre1@gmail.com" );
 
 		Pilot ken = new Pilot( "POWELL", "Ken", "ken.powell@flybe.com", null, colin.getId() );
