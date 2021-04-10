@@ -20,6 +20,12 @@
 	</properties>
 
 	<dependencies>
+	   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
 		<dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-text</artifactId>
@@ -85,6 +91,13 @@
 
 	<build>
 		<plugins>
+			<plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>3.0.3</version>
+      </plugin>
+		
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
