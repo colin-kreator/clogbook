@@ -115,7 +115,6 @@ public class ClogbookWebappApplication {
 					f[i].setDepartureAirport( dep1 );
 					f[i].setArrivalAirport( arr2 );
 				}
-
 			} else {
 				if ( r.nextBoolean() ) {
 					f[i].setDepartureAirport( dep2 );
