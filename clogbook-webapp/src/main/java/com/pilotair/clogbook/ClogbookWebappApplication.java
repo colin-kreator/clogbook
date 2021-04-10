@@ -54,6 +54,7 @@ public class ClogbookWebappApplication {
 		return builder.build();
 	}
 
+	@Bean
 	@Autowired
 	public void LoadSampleFlights( FlightService flightService, UserRepository userRepository,
 	        PilotRepository pilotRepository, AirportRepository airportRepository,
