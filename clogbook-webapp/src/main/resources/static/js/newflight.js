@@ -19,7 +19,7 @@ $(document).ready(function() {
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
 		        cache: false,
-		        url: "../api/flight"
+		        url: CONTEXT_PATH+"api/flight"
 			})
 			.done(function(){
 				initializeLastFlightsList();
@@ -178,10 +178,12 @@ $(document).ready(function() {
 
 	//Gestion des autocomplete airport
 	$("#flight_departure .place input, #flight_arrival .place input").change(function(){
-		
 		validateAirportAjax( $(this) );
-		
-		updateAirportSrSs($(this).parents(".field"));
+	});
+	
+	$("#flight_date input").change(function(){
+		updateAirportSrSs($("#flight_departure"));
+		updateAirportSrSs($("#flight_arrival"));
 	});
 
 	$("#remarks input").on('input', function(){
@@ -535,7 +537,7 @@ $(document).ready(function() {
 	function initializeAircraftModelsDataList(){
 		$("#act_typ_datalist").empty();
 		$.ajax({
-			url:"../api/aircraftmodel",
+			url: CONTEXT_PATH+"api/aircraftmodel",
 			method:"GET",
 			dataType:"json"
 		})
@@ -635,16 +637,19 @@ $(document).ready(function() {
 				inputElement.addClass("is-success");
 				inputElement.removeClass("is-danger");
 				inputElement.data("apt", apt);
+				updateAirportSrSs(inputElement.closest('.field'));
 			}else{
 				inputElement.addClass("is-danger");
 				inputElement.removeClass("is-success");
 				inputElement.data("apt", null);
+				inputElement.closest('.field').find(".srss").text("");
 			}
 			
 		})
 		.fail(function(){
 			inputElement.addClass("is-danger");
 			inputElement.removeClass("is-success");
+			inputElement.closest('.field').find(".srss").text("");
 			inputElement.data("apt", null);
 		});
 	}
@@ -654,7 +659,7 @@ $(document).ready(function() {
 	function updateAirportSrSs(element){
 		
 		if($("#flight_date input").hasClass("is-success") &&
-			element.find(".place input").val() != ""){
+			element.find(".place input").hasClass("is-success")){
 			
 			const dateToSend = $("#flight_date input").val().replaceAll("/","-");
 			const aptToSend = element.find(".place input").val();

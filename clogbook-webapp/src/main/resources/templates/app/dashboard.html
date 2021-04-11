@@ -4,8 +4,8 @@
 	th:replace="~{app/app-layout :: main-fragment(  
                                                 ~{:: title},
                                                 ~{:: #static_resources},
-                                                ~{/fragments/banners :: app-banner},
-                                                ~{/fragments/navbars :: app-navbar},
+                                                ~{fragments/banners :: app-banner},
+                                                ~{fragments/navbars :: app-navbar},
                                                 ~{:: #main-content},
                                                 ~{}
                                                 )}">
@@ -129,7 +129,7 @@
        
 		
 				<!-- Formulaire nouveau vol -->
-				<div th:replace="~{/app/modals/new-flight-modal :: modal-new-flight}"></div>
+				<div th:replace="~{app/modals/new-flight-modal :: modal-new-flight}"></div>
 
         
     	</div>
