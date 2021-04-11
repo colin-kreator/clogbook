@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:fragment="main-fragment (title, otherStaticResources, header, nav, mainContent, footer)">
+
+<head>
+
+<meta charset="UTF-8" />
+	<title th:replace="${title}">Title from layout</title>
+	
+	 <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- FAVICON -->
+	<link rel="shortcut icon" href="/img/favicon.ico" th:href="@{/img/favicon.ico}" type="image/x-icon">
+	
+	<!-- BULMA -->
+	<link rel="stylesheet" th:href="@{/libs/bulma/bulma.min.css}">
+	
+	<!-- JQUERY -->
+	<script type="text/javascript" th:src="@{/libs/jquery/jquery-3.6.0.min.js}"></script>
+	
+	<!--Font-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/40f9fa71eb.js" crossorigin="anonymous"></script>
+  <!--Font-->
+	
+	
+	<!-- Specific site css-->
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	
+	<!-- Other javascript, css source files -->
+	<th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+
+
+
+	<!-- meta SEO -->
+  <meta name="description" content="With CLogbook you can log you pilot's flight hours freely and simply">
+  <meta name="keywords" content="clogbook, pilot, logbook, airplane, aircraft, book, logger">
+	<!-- meta SEO -->
+
+	<!-- CONTEXT PATH HOLDER FOR JAVASCRIPT -->
+	<meta name="context-path" th:content="@{/}"/>
+
+</head>
+
+<body>
+	
+	<nav th:replace="${nav} ?: ~{}"></nav>
+
+	<header th:insert="${header} ?: ~{}">
+        <h2>Page 1</h2>
+  </header>
+	<header>
+		
+	</header>
+
+
+	<section th:insert="${mainContent} ?: ~{}">
+		<h1>Main content</h1>
+		<p>Main content of app-layout</p>
+	</section>
+    
+
+	<footer th:insert="${footer} ?: ~{}">
+		<p>Footer</p>
+	</footer>
+
+</body>
+
+
+</html>

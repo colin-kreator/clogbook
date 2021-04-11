@@ -1,0 +1,464 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>App Fragments</title>
+</head>
+<body>
+
+	<div class="modal" id="modal_newflight" th:fragment="modal-new-flight">
+        <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+            
+            <div class="container">
+            	<div class="columns">
+					<div class="column is-one-third">
+						<p class="modal-card-title">New flight</p>
+					</div>
+					<div class="column is-one-quarter">
+						<div class="field">
+							<div class="control">
+								<label class="radio"> 
+								<input type="radio"
+									name="actualOrSim" id="actualFlight" checked> Actual
+									flight
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="column is-one-quarter">
+						<div class="field">
+							<div class="control">
+								<label class="radio"> <input type="radio"
+									name="actualOrSim" id="simulator"> Simulator
+								</label>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+            </div>
+
+
+				<button class="delete modal_close_action" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+	            <form id="new_flight_form" action="">
+	              <div class="columns">
+	                <div class="column is-one-third">
+	                  <div class="field" id="flight_date">
+	                    <label class="label">Date of flight</label>
+	                    <div class="control has-icons-left">
+	                      <input class="input" type="text" placeholder="dd/mm/yy">
+	                      <span class="icon is-small is-left">
+	                        <i class="far fa-calendar-alt"></i>
+	                      </span>
+	                    </div>
+	                    <p class="help is-danger"></p>
+	                  </div>
+	                </div>
+	                
+	                <div class="column">
+	                  <div class="field flight-only" id="flight_aircraft">
+	                    <label class="label">Aircraft flown</label>
+	                    <div class="columns">
+	                      <div class="column is-two-fifths">
+	                        <div class="control has-icons-left reg">
+	                          <input class="input" type="text" style="text-transform: uppercase" list="act_reg_datalist">
+	                          <datalist id="act_reg_datalist">
+	                          </datalist>
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Aircraft registration</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left type">
+	                          <input class="input" type="text" list="act_typ_datalist">
+	                          <datalist id="act_typ_datalist">
+	                          </datalist>
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Aircraft type</p>
+	                      </div>
+	                      
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	              </div>
+	
+	              <!-- Ligne suivante-->
+	
+	              <div class="columns flight-only">
+	                <div class="column">
+	                  <div class="field" id="flight_departure">
+	                    <label class="label">Departure<span class="subtitle is-7 srss"></span></label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left place">
+	                          <input class="input" style="text-transform: uppercase" type="text">
+	                          
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-departure"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Airport ICAO</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left time">
+	                          <input class="input" type="text" placeholder="hh:mm">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-departure"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">hh:mm in Zulu time</p>
+	                      </div>
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	
+	                <div class="column">
+	                  <div class="field" id="flight_arrival">
+	                    <label class="label">Arrival<span class="subtitle is-7 srss"></span></label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left place">
+	                          <input class="input" style="text-transform: uppercase" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-arrival"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">Airport ICAO</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left time">
+	                          <input class="input" type="text" placeholder="hh:mm">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-plane-arrival"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">hh:mm in Zulu time</p>
+	                      </div>
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	
+	              </div>
+	
+	              <!-- Ligne suivante-->
+	
+	              <div class="columns flight-only">
+	                <div class="column is-two-fifths">
+	                  <div class="field" id="flight_pic">
+	                    <label class="label">PIC Name</label>
+	                    <div class="control has-icons-left place">
+	                      <input class="input" type="text" list = "pic_datalist">
+	                      <datalist id="pic_datalist">
+	                      </datalist>
+	                      <span class="icon is-small is-left">
+	                        <i class="fas fa-user-tie"></i>
+	                      </span>
+	                    </div>
+	                    <p class="help is-dark"></p>
+	                  </div>
+	                </div>
+	
+	                <div class="column">
+	                  <div class="field" id="flight_to-ldg">
+	                    <label class="label">Take Off and landings</label>
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="control has-icons-left to-day">
+	                          <input class="input" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-sun"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">T/O day</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left to-night">
+	                          <input class="input" type="text" >
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-moon"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">T/O night</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left ldg-day">
+	                          <input class="input" type="text">
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-sun"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">LDG day</p>
+	                      </div>
+	                      <div class="column">
+	                        <div class="control has-icons-left ldg-night">
+	                          <input class="input" type="text" >
+	                          <span class="icon is-small is-left">
+	                            <i class="fas fa-moon"></i>
+	                          </span>
+	                        </div>
+	                        <p class="help is-dark">LDG night</p>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	
+	              <!--Ligne suivante-->
+	              <div class="field is-horizontal flight_time flight-only" id="flight_cond">
+	                <div class="field-label is-normal">
+	                  <label class="label">Conditions</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	
+	                      <div class="column">
+	                        <div class="field mp">
+	                          <div class="control">
+	                            <label class="checkbox">
+	                              <input type="checkbox" id="MP_CB">
+	                              Multi-Pilot
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	                      <div class="column">
+	                        <div class="field ifr">
+	                          <div class="control">
+	                            <label class="checkbox">
+	                              <input type="checkbox" id="IFR_CB">
+	                              IFR
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control">
+	                            <label class="radio">
+	                              <input type="radio" name="engines" id="SE_CB" checked>
+	                              Single-engine
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control">
+	                            <label class="radio">
+	                              <input type="radio" name="engines" id="ME_CB">
+	                              Multi-engine
+	                            </label>
+	                          </div>
+	                        </div>
+	                      </div>
+	  
+	  
+	                    </div>
+	
+	                  </div>
+	                  
+	                </div>
+	              </div>
+	               <!-- Ligne suivante-->
+	
+	             
+	              <div class="field is-horizontal flight_time flight-only">
+	                <div class="field-label is-normal">
+	                  <label class="label">Operational times</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control total-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Total time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control night-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Night time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control ifr-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">IFR time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control xc-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">X-country time</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div> 
+	                </div>
+	              </div>
+	              
+	         <!-- Ligne suivante-->
+	              <div class="field is-horizontal flight_time flight-only">
+	                <div class="field-label is-normal">
+	                  <label class="label">Pilot times</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control pic-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">PIC time</p>
+	                        </div>
+	                      </div>
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control copilot-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Co-pilot time</p>
+	                        </div>
+	                      </div>
+	
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control dual-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Dual time</p>
+	                        </div>
+	                      </div>
+	
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control instructor-time">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Instructor time</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	              
+	              <!-- Ligne suivante-->
+	
+				  <div class="field is-horizontal sim sim-only is-hidden">
+	                <div class="field-label is-normal">
+	                  <label class="label">Sim session</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column is-three-quarter">
+	                        <div class="field">
+	                          <div class="control sim-type">
+	                            <input class="input" type="text" list="sim_type_list">
+	                            <datalist id="sim_type_list">
+	                          	</datalist>
+	                          </div>
+	                          <p class="help is-dark">Simulator type / registration <span id="sim_type_helper">(max. 30 characters)</span></p>
+	                        </div>
+	                      </div>
+	                      <div class="column is-one-quarter">
+	                        <div class="field">
+	                          <div class="control sim-time">
+	                            <input class="input" type="text"  placeholder="hh:mm">
+	                          </div>
+	                          <p class="help is-dark has-text-centered">Session time</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	              <!-- Ligne suivante-->
+	
+	              <div class="field is-horizontal" id="remarks">
+	                <div class="field-label is-normal">
+	                  <label class="label">Remarks</label>
+	                </div>
+	                <div class="field-body">
+	                  <div class="container">
+	                    <div class="columns">
+	                      <div class="column">
+	                        <div class="field">
+	                          <div class="control has-icons-left">
+	                            <input class="input" type="text">
+	                            <span class="icon is-small is-left">
+	                              <i class="far fa-comment-dots"></i>
+	                            </span>
+	                          </div>
+	                          <p class="help is-dark">Max. 50 characters</p>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	
+	
+	          
+	
+	              <!--Ligne suivante-->
+	
+	
+				</form>
+            </section>
+            <footer class="modal-card-foot">
+              <p class="control">
+                <a class="button is-info" id="button_save_newflight">
+                  <span class="icon">
+                    <i class="fas fa-save"></i>
+                  </span>
+                  <span>
+                    Save flight
+                  </span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button modal_close_action">
+                  <span class="icon">
+                    <i class="fas fa-window-close"></i>
+                  </span>
+                  <span>Cancel</span>
+                </a>
+              </p>
+              
+            </footer>
+          </div>
+        </div>
+
+
+</body>
+</html>

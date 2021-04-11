@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>App Fragments</title>
+</head>
+<body>
+
+
+
+<!--APP NAVBAR-->
+	 	<nav class="navbar is-dark" id="navbar" th:fragment="app-navbar">
+			<div class="navbar-brand">
+				<a class="navbar-item is-nobackground" th:href="@{/}">
+					<img th:src="@{/img/logo-full.png}" src="/img/logo-full.png" alt="CLogbook logo"  height="32">
+				</a>
+				<div class="navbar-burger" data-target="navbarMenu">
+	                    <span></span>
+	                    <span></span>
+	                    <span></span>
+				</div>
+			</div>
+			<div id="navbar-menu" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item is-nobackground" th:href="@{/app/dashboard}">
+						Dashboard
+					</a>
+					<div class="navbar-item  is-nobackground has-dropdown is-hoverable">
+						<a class="navbar-link" href="#">
+	            Manage your datas
+						</a>
+						<div class="navbar-dropdown is-boxed">
+							<a class="navbar-item" href="#">
+	 							Aircrafts
+							</a>
+							<a class="navbar-item" href="#">
+								Pilots
+							</a>
+							<a class="navbar-item" href="#">
+								Preferences
+							</a>
+						</div>
+					</div>
+				</div>
+	 			<div class="navbar-end">
+					<div class="navbar-item">
+						<div class="field is-grouped">
+							<p class="control">
+								<a class="button" th:href="@{/logout-process}">
+									<span class="icon">
+										<i class="fas fa-sign-out-alt"></i>
+									</span>
+									<span>
+										Log out
+									</span>
+								</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		
+<!-- HOME NAVBAR -->
+        <nav class="navbar is-dark" id="navbar" th:fragment="home-navbar">
+            <div class="navbar-brand">
+                <a class="navbar-item  is-nobackground" th:href="@{/}">
+                    <img src="img/logo-full.png" alt="CLogbook logo"  height="32">
+                  </a>
+                  <div class="navbar-burger" data-target="navbarMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              
+                <div id="navbar-menu" class="navbar-menu">
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      <div class="field is-grouped">
+                        <p class="control">
+                          <a class="button" id="button_login">
+                            <span class="icon">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </span>
+                            <span>
+                              Log in
+                            </span>
+                          </a>
+                        </p>
+                        <p class="control">
+                          <a class="button is-info" id="button_signup">
+                            <span class="icon">
+                                <i class="fas fa-file-alt"></i>
+                            </span>
+                            <span>Sign up</span>
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </nav> 
+		
+	</body>
+		
+</html>
+		

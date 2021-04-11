@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{app/app-layout :: main-fragment(  
+                                                ~{:: title},
+                                                ~{:: #static_resources},
+                                                ~{/fragments/banners :: app-banner},
+                                                ~{/fragments/navbars :: app-navbar},
+                                                ~{:: #main-content},
+                                                ~{}
+                                                )}">
+
+	<head>
+    
+    <title>CLogbook dashboard</title>
+
+		<th:block id="static_resources">
+      	<script type="text/javascript" th:src="@{/js/dashboard.js}"></script>
+	    	<script th:src="@{/js/newflight.js}" src="/js/newflight.js"></script>
+		</th:block>
+		
+  </head>
+
+    <body>
+      <div id="main-content">
+         <!--Section : statistics-->
+        
+          <div id="stats_level_container" class="container">
+
+            <div class="box" id="stats_level_box">
+              <div class="level" id="stats_level">
+
+                <div class="level-item">
+                  <p class="control">
+                    <a id="button_newflight" class="button is-success">
+                      <span class="icon">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <span>
+                        New Flight
+                      </span>
+                    </a>
+                  </p>
+                    
+                  
+                </div>
+
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Total hours</p>
+                    <p> <span class="title is-4">40 000</span> <span class="title is-6">:08</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Night hours</p>
+                    <p> <span class="title is-4">18 000</span> <span class="title is-6">:53</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">Ifr hours</p>
+                    <p> <span class="title is-4">25 000</span> <span class="title is-6">:41</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">12 months hours</p>
+                    <p> <span class="title is-4">168</span> <span class="title is-6">:17</span> </p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div class="box">
+                    <p class="heading">3 months hours</p>
+                    <p> <span class="title is-4">0</span> <span class="title is-6">:00</span> </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--Section : stats-->
+
+
+        <!-- tableau vols -->
+        <div class="columns is-centered" style="margin-top: 20px">
+          <div class="column is-narrow">
+            <div class="box">
+            <div class="title">Last 20 flights : </div>
+              <div class="table-container">
+                <table class="table is-hoverable is-narrow is-fullwidth is-striped is-bordered" id="table_20_flights">
+                  <thead class="has-text-centered">
+                    <tr>
+                      <td rowspan="2"><strong>Date</strong><br/>(dd/mm/yy)</td>
+                      <th colspan="2"><abbr title="Departure">Dep</abbr></th>
+                      <th colspan="2"><abbr title="Arrival">Arrival</abbr></th>
+                      <th colspan="2">Aircraft</th>
+                      <th rowspan="2">PIC<br/>Name</th>
+                      <th colspan="3"><abbr title="Flight times">Flight times</abbr></th>
+                      <th rowspan="2"><abbr title="Flight conditions">Flight conditions</abbr></th>
+                      <th colspan="2">Sim session</th>
+                      <th rowspan="2"><br/>Remarks</th>
+                    </tr>
+                    <tr>
+                      <th><abbr title="Departure place">Place</abbr></th>
+                      <th><abbr title="Departure time">Time</abbr></th>
+                      <th><abbr title="Arrival place">Place</abbr></th>
+                      <th><abbr title="Arrival time">Time</abbr></th>
+                      <th><abbr title="Aircraft type">Type</abbr></th>
+                      <th><abbr title="Aircraft Registration">Reg.</abbr></th>
+                      <th><abbr title="Total time">Total</abbr></th>
+                      <th><abbr title="Night time">Night</abbr></th>
+                      <th><abbr title="Instrument time">IFR</abbr></th>
+                      <th><abbr title="Simulator type">Type</abbr></th>
+                      <th><abbr title="Sim session time">Time</abbr></th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                  </tbody>
+                </table>
+  
+              </div>
+            </div>
+          </div>
+		</div>
+    
+
+        <!-- tableau vols -->
+       
+		
+				<!-- Formulaire nouveau vol -->
+				<div th:replace="~{/app/modals/new-flight-modal :: modal-new-flight}"></div>
+
+        
+    	</div>
+    </body>
+
+</html>

@@ -38,6 +38,11 @@ public class HomeController {
 		return "index";
 	}
 
+	@GetMapping( "/login" )
+	public String displayLoginPage() {
+		return "login";
+	}
+
 	@GetMapping( "/signup" )
 	public String redirectSignUpGet() {
 		return "redirect:/?signup";

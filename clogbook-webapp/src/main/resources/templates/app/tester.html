@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ 
+<!--  main-fragment (title, otherStaticResources, header, nav, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{app/app-layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #static-resources},
+                                                ~{fragments :: app-banner},
+                                                ~{fragments :: app-navbar},
+                                                ~{:: #main-content},
+                                                ~{}
+                                                )}">
+                                                
+	<head>
+		<title>Tester page</title>
+	
+	  <th:block id="static-resources">
+	       
+	       
+		</th:block>
+    
+  </head>
+    
+<body>
+	
+	<div id="main-content">
+        
+        Header of Home Page
+        
+    </div>
+	
+	
+</body>
+    
+</html>

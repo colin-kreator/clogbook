@@ -61,7 +61,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			        // Right List
 			        .authorizeRequests()
-			        .antMatchers( "/", "/home", "/index", "/css/**", "/js/**", "/img/**", "/signup" ).permitAll()
+			        .antMatchers( "/", "/css/**", "/libs/**", "/js/**", "/img/**", "/signup" ).permitAll()
 			        .antMatchers( "/app/*" ).authenticated()
 			        .anyRequest().authenticated()
 			        .and()

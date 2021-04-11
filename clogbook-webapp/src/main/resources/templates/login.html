@@ -1,66 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-xmlns:th="http://www.thymeleaf.org">
+			xmlns:th="http://www.thymeleaf.org"
+			th:replace="~{app/app-layout :: main-fragment(  
+			                                                ~{::title},
+			                                                ~{:: #static_resources},
+			                                                ~{/fragments/banners :: home-banner},
+			                                                ~{},
+			                                                ~{:: #main_content},
+			                                                ~{}
+			                                                )}">
 
 <head>
-<meta charset="utf-8">
-<title>CLogbook - login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CLogbook - Login</title>
+	
+	<th:block id="static_resources">
+		<script type="text/javascript" th:src="@{/js/login.js}"></script>
+	</th:block>
 
-<!-- favicon -->
-		<link rel="shortcut icon" href="/img/favicon.ico" th:href="@{/img/favicon.ico}" type="image/x-icon">
-
-<!--CSS-->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-<link rel="stylesheet" th:href="@{/css/main.css}">
-<!--CSS-->
-
-
-<!--Font-->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
-	rel="stylesheet">
-<script src="https://kit.fontawesome.com/40f9fa71eb.js"
-	crossorigin="anonymous"></script>
-<!--Font-->
-
-<!-- meta SEO -->
-<meta name="description"
-	content="With CLogbook you can log you pilot's flight hours freely and simply">
-<meta name="keywords"
-	content="clogbook, pilot, logbook, airplane, aircraft, book, logger">
-<!-- meta SEO -->
 
 
 </head>
 
 <body>
-
- 	<!--Navbar-->
-            <nav class="navbar is-dark" id="navbar">
-                <div class="navbar-brand">
-                  <a class="navbar-item is-nobackground" th:href="@{/}">
-                    <img th:src="@{/img/logo-full.png}" alt="CLogbook logo"  height="32">
-                  </a>
-                </div>
-            </nav>
-        <!-- Navbar -->
-
-	<!--Banner-->
-	<section class="hero is-medium has-bg-img">
-		<div class="hero-head">
-			<div class="container has-text-centered">
-				<h1 class="title is-1">Welcome on CLogbook</h1>
-				<h2 class="subtitle">Simply log your flying hours</h2>
-			</div>
-		</div>
-		<div class="hero-body"></div>
-	</section>
-	<!--Banner-->
-
+	<div id="main_content">
 	<!-- Login form-->
-	<div class="level" id="login_level">
+	<div class="level" id="login_level" >
 		<div class="level-item">
 			<div class="box">
 				<div class="has-text-centered">
@@ -78,7 +42,7 @@ xmlns:th="http://www.thymeleaf.org">
 		       		</div>
 		        </div>
 				<div th:if="${param.logout}">
-		        	<!-- Si redirigÃ© ici aprÃ¨s logout -->
+		        	<!-- Si redirigé ici après logout -->
 		        </div>
 				<form th:action="@{/login-process}" method="POST" class="login_form">
 					<div class="field">
@@ -95,7 +59,7 @@ xmlns:th="http://www.thymeleaf.org">
 					<div class="field">
 						<label class="label">Password</label>
 						<div class="control has-icons-left has-icons-right">
-							<input class="input" type="password" name="userpassword"placeholder="Your password" id="field_password"> 
+							<input class="input" type="password" name="userpassword" placeholder="Your password" id="field_password"> 
 							<span class="icon is-small is-left"> 
 								<i class="fas fa-key"></i>
 							</span>
@@ -139,11 +103,7 @@ xmlns:th="http://www.thymeleaf.org">
 
 	<!-- Login form -->
 
-
-
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="js/main.js"></script>
+	</div>
 </body>
 
 </html>
