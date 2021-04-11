@@ -1,11 +1,11 @@
 $(document).ready(function() {
     
 	$("#button_save_newflight").click(function(){
-		recordFlight();
+		
+		recordFlight()
 	});
 
 	function recordFlight(){
-		
 		
 		const checker = $("#modal_newflight .is-danger:visible");
 		if(checker.length > 0) {
@@ -29,6 +29,8 @@ $(document).ready(function() {
 			})
 			.fail(function(){
 				alert("DTC");
+			}).then(function(){
+				$(this).removeClass('is-loading');
 			});
 		}
 	}
