@@ -20,4 +20,6 @@ public interface FlightService {
 
 	void deleteByUserId( Integer userId );
 
+	List<Flight> findInterventionsForUser( Integer userId, Integer offset, Integer size );
+
 }

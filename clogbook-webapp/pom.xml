@@ -9,10 +9,10 @@
 		<version>2.3.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pilotair.clogbook</groupId>
+	<groupId>com.pilotair</groupId>
 	<artifactId>webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>clogbook-webapp</name>
+	<name>clogbook</name>
 	<description>CLogbook web application</description>
 
 	<properties>

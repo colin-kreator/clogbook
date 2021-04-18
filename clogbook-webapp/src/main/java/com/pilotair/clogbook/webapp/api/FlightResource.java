@@ -7,8 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,13 @@ public class FlightResource {
 	@PostMapping
 	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'flight:create')" )
 	public Flight add( @RequestBody FlightForm flightForm, Authentication auth ) {
+		Flight flight = flightForm.createFlight();
+		logger.info( String.format( "User %s is saving a new flight : %s", auth.getName(), flight.toString() ) );
+		return flightService.insertFlight( flight, ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );
+	}
+
+	@PutMapping
+	public Flight update( @RequestBody FlightForm flightForm, Authentication auth ) {
 		Flight flight = flightForm.createFlight();
 		logger.info( String.format( "User %s is saving a new flight : %s", auth.getName(), flight.toString() ) );
 		return flightService.insertFlight( flight, ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );
@@ -83,6 +93,20 @@ public class FlightResource {
 		logger.info( String.format( "User %s is getting its sim types", auth.getName() ) );
 		return flightService.getUserSimTypes( ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );
 
+	}
+
+	@GetMapping( "/{offset}/{size}" )
+	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'flight:read')" )
+	public List<Flight> getAllFlights( Authentication auth, @PathVariable( "offset" ) Integer offset,
+	        @PathVariable( "size" ) Integer size ) {
+		logger.info( String.format( "User %s requests its flights, offset " + offset, auth.getName() ) );
+		return flightService.findInterventionsForUser( ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId(),
+		        offset, size );
+	}
+
+	@DeleteMapping( "/{id}" )
+	public void deleteFlight( @PathVariable( "id" ) Integer id ) {
+		flightService.deleteByUserId( id );
 	}
 
 }

@@ -15,6 +15,7 @@
     <title>CLogbook dashboard</title>
 
 		<th:block id="static_resources">
+				<script type="text/javascript" th:src="@{/js/safeActuator.js}"></script>
       	<script type="text/javascript" th:src="@{/js/dashboard.js}"></script>
 	    	<script th:src="@{/js/newflight.js}" src="/js/newflight.js"></script>
 		</th:block>
@@ -45,31 +46,31 @@
                   
                 </div>
 
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered is-unselectable">
                   <div class="box">
                     <p class="heading">Total hours</p>
                     <p> <span class="title is-4">40 000</span> <span class="title is-6">:08</span> </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered is-unselectable">
                   <div class="box">
                     <p class="heading">Night hours</p>
                     <p> <span class="title is-4">18 000</span> <span class="title is-6">:53</span> </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered is-unselectable">
                   <div class="box">
                     <p class="heading">Ifr hours</p>
                     <p> <span class="title is-4">25 000</span> <span class="title is-6">:41</span> </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered is-unselectable">
                   <div class="box">
                     <p class="heading">12 months hours</p>
                     <p> <span class="title is-4">168</span> <span class="title is-6">:17</span> </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered is-unselectable">
                   <div class="box">
                     <p class="heading">3 months hours</p>
                     <p> <span class="title is-4">0</span> <span class="title is-6">:00</span> </p>
@@ -85,9 +86,9 @@
         <div class="columns is-centered" style="margin-top: 20px">
           <div class="column is-narrow">
             <div class="box">
-            <div class="title">Last 20 flights : </div>
+            <div class="title" th:text="#{dashboard.table.title}"></div>
               <div class="table-container">
-                <table class="table is-hoverable is-narrow is-fullwidth is-striped is-bordered" id="table_20_flights">
+                <table class="table is-hoverable is-narrow is-fullwidth is-striped is-bordered" id="flights_table">
                   <thead class="has-text-centered">
                     <tr>
                       <td rowspan="2"><strong>Date</strong><br/>(dd/mm/yy)</td>
@@ -118,8 +119,11 @@
                   <tbody>
                   </tbody>
                 </table>
-  
+  							
               </div>
+              <div id="end_message" class="has-text-centered has-text-success">
+  								<p th:text="#{dashboard.table.end}"></p>
+  							</div>
             </div>
           </div>
 		</div>

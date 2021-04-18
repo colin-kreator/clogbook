@@ -12,19 +12,23 @@ import com.pilotair.clogbook.core.dto.PilotDto;
 import com.pilotair.clogbook.core.entity.Aircraft;
 import com.pilotair.clogbook.core.entity.Flight;
 import com.pilotair.clogbook.core.entity.Pilot;
+import com.pilotair.clogbook.core.repository.FlightPagingRepository;
 import com.pilotair.clogbook.core.repository.FlightRepository;
 
 @Service
 public class FlightServiceImpl implements FlightService {
 
 	@Autowired
-	private FlightRepository	flightRepository;
+	private FlightRepository		flightRepository;
 
 	@Autowired
-	private AircraftService		aircraftService;
+	private FlightPagingRepository	flightPagingRepository;
 
 	@Autowired
-	private PilotService		pilotService;
+	private AircraftService			aircraftService;
+
+	@Autowired
+	private PilotService			pilotService;
 
 	@Override
 	@Transactional
@@ -48,6 +52,12 @@ public class FlightServiceImpl implements FlightService {
 		}
 
 		return flightRepository.save( flight );
+	}
+
+	@Override
+	public List<Flight> findInterventionsForUser( Integer userId,
+	        Integer offset, Integer size ) {
+		return flightPagingRepository.findInterventionsForUser( userId, offset, size );
 	}
 
 	@Override
@@ -110,6 +120,10 @@ public class FlightServiceImpl implements FlightService {
 	@Transactional
 	public void deleteByUserId( Integer userId ) {
 		flightRepository.deleteByUserId( userId );
+	}
+
+	public void deleteById( Integer id ) {
+		flightRepository.deleteById( id );
 	}
 
 }

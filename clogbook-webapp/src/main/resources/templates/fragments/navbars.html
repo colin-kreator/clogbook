@@ -7,7 +7,21 @@
 </head>
 <body>
 
-
+<!-- Language selector -->
+	
+		<div class="control has-icons-left" th:fragment="locales">
+			<div class="select is-small">
+				<select id="locales">
+				    <option selected value="" th:text="#{lang.change}"></option>
+				    <option value="en" th:text="#{lang.eng}"></option>
+				    <option value="fr" th:text="#{lang.fr}"></option>
+				</select>
+				<span class="icon is-small is-left">
+			    <i class="fas fa-globe"></i>
+			  </span>
+			</div>
+		</div>
+		
 
 <!--APP NAVBAR-->
 	 	<nav class="navbar is-dark" id="navbar" th:fragment="app-navbar">
@@ -23,27 +37,26 @@
 			</div>
 			<div id="navbar-menu" class="navbar-menu">
 				<div class="navbar-start">
-					<a class="navbar-item is-nobackground" th:href="@{/app/dashboard}">
-						Dashboard
+					<a class="navbar-item is-nobackground" th:href="@{/app/dashboard}" th:text="#{navbar.app.dashboard}">
+					</a>
+					<a class="navbar-item is-nobackground" th:href="@{/app/dashboard}" th:text="#{navbar.app.stats}">
 					</a>
 					<div class="navbar-item  is-nobackground has-dropdown is-hoverable">
-						<a class="navbar-link" href="#">
-	            Manage your datas
+						<a class="navbar-link" href="#" th:text="#{navbar.app.datas}">
 						</a>
 						<div class="navbar-dropdown is-boxed">
-							<a class="navbar-item" href="#">
-	 							Aircrafts
+							<a class="navbar-item" href="#" th:text="#{navbar.app.aircrafts}">
 							</a>
-							<a class="navbar-item" href="#">
-								Pilots
+							<a class="navbar-item" href="#" th:text="#{navbar.app.pilots}">
 							</a>
-							<a class="navbar-item" href="#">
-								Preferences
+							<a class="navbar-item" href="#" th:text="#{navbar.app.parameters}">
 							</a>
 						</div>
 					</div>
 				</div>
 	 			<div class="navbar-end">
+	 				
+	 			
 					<div class="navbar-item">
 						<div class="field is-grouped">
 							<p class="control">
@@ -58,6 +71,13 @@
 							</p>
 						</div>
 					</div>
+					<div class="navbar-item">
+						<div class="field is-grouped">
+							<div th:replace="~{:: locales}"></div>
+						</div>
+					
+					
+	 				</div>
 				</div>
 			</div>
 		</nav>
@@ -99,6 +119,13 @@
                         </p>
                       </div>
                     </div>
+                    <div class="navbar-item">
+											<div class="field is-grouped">
+												<div th:replace="~{:: locales}"></div>
+											</div>
+										
+										
+						 				</div>
                   </div>
                 </div>
             </nav> 

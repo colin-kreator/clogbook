@@ -11,6 +11,8 @@ import com.pilotair.clogbook.core.entity.Flight;
 
 public class FlightForm {
 
+	private Integer		id;
+
 	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yy" )
 	private LocalDate	date;
 
@@ -77,6 +79,7 @@ public class FlightForm {
 		        instructorTime, dualTime, remarks, simType, simTime, crossCountryTime );
 
 		flight.setPilotDto( pilotDto );
+		flight.setId( id );
 		return flight;
 	}
 
@@ -260,6 +263,21 @@ public class FlightForm {
 		} else if ( !totalTime.equals( other.totalTime ) )
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId( Integer id ) {
+		this.id = id;
 	}
 
 	/**

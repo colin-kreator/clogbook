@@ -8,6 +8,9 @@
 <body>
 
 	<div class="modal" id="modal_newflight" th:fragment="modal-new-flight">
+		<div id="invalid_flight_modal_message" class="is-hidden" th:text="#{modal.flight.invalid}"></div>
+		
+		
         <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
@@ -47,6 +50,8 @@
             </header>
             <section class="modal-card-body">
 	            <form id="new_flight_form" action="">
+	            	
+	            	<input id="flight_id_input" type="hidden"/>
 	              <div class="columns">
 	                <div class="column is-one-third">
 	                  <div class="field" id="flight_date">

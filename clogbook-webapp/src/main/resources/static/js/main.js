@@ -7,6 +7,13 @@ $(document).ready(function() {
 	CONTEXT_PATH = $('meta[name=context-path]').attr("content");
 	ABSOLUTE_PATH = window.location.origin + CONTEXT_PATH;
 
+	$("#locales").change(function () {
+     var selectedOption = $('#locales').val();
+     if (selectedOption != ''){
+        window.location.replace(window.location.href.split('?')[0]+'?lang=' + selectedOption);
+     }
+  });
+
 	// Check for click events on the navbar burger icon
 	$(".navbar-burger").click(function() {
 		console.log('click');
