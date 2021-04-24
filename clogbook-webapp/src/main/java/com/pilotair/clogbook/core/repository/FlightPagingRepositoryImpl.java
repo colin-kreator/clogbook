@@ -17,7 +17,7 @@ public class FlightPagingRepositoryImpl implements FlightPagingRepository {
 	private EntityManager em;
 
 	@Override
-	public List<Flight> findInterventionsForUser( Integer userId,
+	public List<Flight> findFlightsForUser( Integer userId,
 	        Integer offset, Integer size ) {
 
 		String q = "SELECT f from Flight f where f.userId = :userId order by f.date desc";

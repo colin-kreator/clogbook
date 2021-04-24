@@ -171,7 +171,15 @@ $(document).ready(function() {
 	});
 
     
-
+	$("#actualFlight, #simulator").click(function(){
+		if($('#actualFlight').is(':checked')){
+			$('.flight-only').removeClass('is-hidden');
+			$('.sim-only').addClass('is-hidden');
+		}else{
+			$('.flight-only').addClass('is-hidden');
+			$('.sim-only').removeClass('is-hidden');
+		}
+	});
 
 });
 
@@ -206,15 +214,7 @@ function recordFlight(){
 		}
 	}
 	
-	$("#actualFlight, #simulator").click(function(){
-		if($('#actualFlight').is(':checked')){
-			$('.flight-only').removeClass('is-hidden');
-			$('.sim-only').addClass('is-hidden');
-		}else{
-			$('.flight-only').addClass('is-hidden');
-			$('.sim-only').removeClass('is-hidden');
-		}
-	});
+	
 	
 	function createJsonToSend(){
 		let json = {};
@@ -702,6 +702,104 @@ function resetFormWithFlight(tr){
 	const flt = tr.data('flt');
 	console.log(flt);
 	resetForm();
+	
+	
+	//ID
+	$('#flight_id_input').val(flt.id);
+		
+	//DATE
+	$("#flight_date input").val(flt.date);
+	
+	//AIRCRAFT
+	$("#flight_aircraft .reg input").data('act', flt.aircraft);
+	if(flt.aircraft != null) $("#flight_aircraft .reg input").val(flt.aircraft.registration);
+	$('#flight_aircraft .type input').data("am", flt.aircraft.aircraftModel);
+	if(flt.aircraft != null && flt.aircraft.aircraftModel != null)
+		$('#flight_aircraft .type input').val(flt.aircraft.aircraftModel.customName);
+	
+	//AIRPORTS
+	$("#flight_departure .place input").val(flt.departureAirport.icaoCode).change();
+	$("#flight_arrival .place input").val(flt.arrivalAirport.icaoCode).change();
+	
+	//TIMES OF ARRIVAL / DEPARTURE
+	$("#flight_departure .time input").val(flt.departureTime);
+	$("#flight_arrival .time input").val(flt.arrivalTime);
+
+
+		if($('#actualFlight').is(':checked')){
+		
+		//PILOT
+			if($('#flight_pic input').data("plt") == null && $('#flight_pic input').val() != ""){
+				const j_pilot = {};
+				j_pilot["lastName"] = $('#flight_pic input').val();
+				json["pilotDto"] = j_pilot;
+			}else if($('#flight_pic input').data("plt") !=null){
+				json["pilotDto"] = $('#flight_pic input').data("plt");
+			}
+			
+		//Take offs and landings
+			if($('#flight_to-ldg .to-day input').val()!=""){
+				json["dayTO"] = $('#flight_to-ldg .to-day input').val();
+			}
+			if($('#flight_to-ldg .to-night input').val()!=""){
+				json["nightTO"] = $('#flight_to-ldg .to-night input').val();
+			}
+			if($('#flight_to-ldg .ldg-day input').val()!=""){
+				json["dayLdg"] = $('#flight_to-ldg .ldg-day input').val();
+			}
+			if($('#flight_to-ldg .ldg-night input').val()!=""){
+				json["nightLdg"] = $('#flight_to-ldg .ldg-night input').val();
+			}
+			
+		//FLIGHT CONDITIONS
+			json["multiPilot"] = $('#MP_CB').is(':checked');
+			json["ifrFlight"] = $('#IFR_CB').is(':checked');
+			json["multiEngine"] = $('#ME_CB').is(':checked');
+		
+		//FLIGHT TIMES
+			const j_totalTime = $('.flight_time .total-time input').val();
+			if(j_totalTime != "") json['totalTime'] = timeInMin(j_totalTime);
+			
+			const j_nightTime = $('.flight_time .night-time input').val();
+			if(j_nightTime != "") json['nightTime'] = timeInMin(j_nightTime);
+			
+			const j_instrumentTime = $('.flight_time .ifr-time input').val();
+			if(j_instrumentTime != "") json['instrumentTime'] = timeInMin(j_instrumentTime);
+			
+			const j_crossCountryTime = $('.flight_time .xc-time input').val();
+			if(j_crossCountryTime != "") json['crossCountryTime'] = timeInMin(j_crossCountryTime);
+			
+			const j_picTime = $('.flight_time .pic-time input').val();
+			if(j_picTime != "") json['picTime'] = timeInMin(j_picTime);
+			
+			const j_dualTime = $('.flight_time .dual-time input').val();
+			if(j_dualTime != "") json['dualTime'] = timeInMin(j_dualTime);
+			
+			const j_copilotTime = $('.flight_time .copilot-time input').val();
+			if(j_copilotTime != "") json['copilotTime'] = timeInMin(j_copilotTime);
+			
+			const j_instructorTime = $('.flight_time .instructor-time input').val();
+			if(j_instructorTime != "") json['instructorTime'] = timeInMin(j_instructorTime);
+			
+		}else{
+			const j_simType = $('.sim .sim-type input').val();
+			if(j_simType != "") json["simType"] = j_simType;
+			
+			const j_simTime = $('.sim .sim-time input').val();
+			if(j_simTime != "") json['simTime'] = timeInMin(j_simTime);
+						
+		}
+		
+		
+		
+		//REMARKS
+		$('#remarks input').val(flt.remarks);
+		
+	
+	
+	
+	
+	
 	
 	
 	$('#modal_newflight').addClass("is-active");

@@ -55,9 +55,9 @@ public class FlightServiceImpl implements FlightService {
 	}
 
 	@Override
-	public List<Flight> findInterventionsForUser( Integer userId,
+	public List<Flight> findFlightsForUser( Integer userId,
 	        Integer offset, Integer size ) {
-		return flightPagingRepository.findInterventionsForUser( userId, offset, size );
+		return flightPagingRepository.findFlightsForUser( userId, offset, size );
 	}
 
 	@Override
@@ -122,6 +122,8 @@ public class FlightServiceImpl implements FlightService {
 		flightRepository.deleteByUserId( userId );
 	}
 
+	@Override
+	@Transactional
 	public void deleteById( Integer id ) {
 		flightRepository.deleteById( id );
 	}

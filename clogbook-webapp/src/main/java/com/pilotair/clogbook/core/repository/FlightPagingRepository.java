@@ -6,6 +6,6 @@ import com.pilotair.clogbook.core.entity.Flight;
 
 public interface FlightPagingRepository {
 
-	List<Flight> findInterventionsForUser( Integer userId, Integer offset, Integer size );
+	List<Flight> findFlightsForUser( Integer userId, Integer offset, Integer size );
 
 }

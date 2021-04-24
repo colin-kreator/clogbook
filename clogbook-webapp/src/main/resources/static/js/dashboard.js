@@ -98,7 +98,6 @@ async function showHiddenFlights(delay){
 
 function appendFlights(flights) {
 		for (flt of flights) {
-			
 			const act = flt.aircraft;
 			
 			let totalTime = '-' ;
@@ -109,8 +108,6 @@ function appendFlights(flights) {
 			if(flt.instrumentTime != null ) instrumentTime = Math.floor(flt.instrumentTime/60)+":"+((''+flt.instrumentTime%60).length<2 ? ('0'+flt.instrumentTime%60)+'' : (''+flt.instrumentTime%60) );
 			let simTime = '-' ;
 			if(flt.simTime != null ) simTime = Math.floor(flt.simTime/60)+":"+((''+flt.simTime%60).length<2 ? ('0'+flt.simTime%60)+'' : (''+flt.simTime%60) );
-			
-		
 		
 			let conditions='';
 			if(flt.multiEngine != null && flt.multiEngine){
@@ -151,7 +148,7 @@ function appendFlights(flights) {
 											+'			<i class="fas fa-trash-alt"></i>'
 											+'		</span>'
 											+'	</a>'
-											+'	<a class="button is-small is-danger is-light actuator delete-db" title="Delete this intervention" style="display: none;">'
+											+'	<a class="button is-small is-danger is-light actuator delete-db" title="Delete this flight" style="display: none;">'
 											+'		<span class="icon"> '
 											+'			<i class="fas fa-check"></i>'
 											+'		</span>'
@@ -185,10 +182,17 @@ function appendFlights(flights) {
 			$tr.append($('<td>').html(deleteHtml).addClass('pr-0'));
 			activateActuators($tr.find('.safe-actuator .selector'));
 			
-			$tr.click(function(){
-				resetFormWithFlight($tr)
+			$tr.find('.actuator.delete-db').click(function(){
+				$.ajax({
+					url: CONTEXT_PATH+'api/flight/'+flt.id,
+					method: 'delete'
+				}).done(function(){$tr.remove();})
+				.fail(function(){alert('Error while deleting this flight')});
 			});
 			
+			$tr.click(function(){
+				resetFormWithFlight($tr);
+			});
 		}//end for
 	
 	

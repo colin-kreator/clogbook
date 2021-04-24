@@ -100,13 +100,17 @@ public class FlightResource {
 	public List<Flight> getAllFlights( Authentication auth, @PathVariable( "offset" ) Integer offset,
 	        @PathVariable( "size" ) Integer size ) {
 		logger.info( String.format( "User %s requests its flights, offset " + offset, auth.getName() ) );
-		return flightService.findInterventionsForUser( ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId(),
+		List<Flight> flights = flightService.findFlightsForUser(
+		        ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId(),
 		        offset, size );
+
+		return flights;
+
 	}
 
 	@DeleteMapping( "/{id}" )
 	public void deleteFlight( @PathVariable( "id" ) Integer id ) {
-		flightService.deleteByUserId( id );
+		flightService.deleteById( id );
 	}
 
 }

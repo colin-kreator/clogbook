@@ -15,8 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pilotair.clogbook.core.dto.PilotDto;
 
 @Entity
@@ -40,8 +39,7 @@ public class Flight {
 	private Pilot		pilot;
 
 	@Transient
-	@JsonSerialize
-	@JsonDeserialize
+	@JsonProperty
 	private PilotDto	pilotDto;
 
 	@ManyToOne( fetch = FetchType.LAZY )
