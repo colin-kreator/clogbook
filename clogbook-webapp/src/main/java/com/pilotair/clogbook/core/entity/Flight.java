@@ -51,7 +51,7 @@ public class Flight {
 	private Airport		arrivalAirport;
 
 	@Column( name = "flt_date", columnDefinition = "DATE" )
-	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yy" )
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy" )
 	private LocalDate	date;
 
 	@Column( name = "flt_departure_time", columnDefinition = "TIME" )

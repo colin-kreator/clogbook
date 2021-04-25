@@ -20,7 +20,8 @@ public interface FlightService {
 
 	void deleteByUserId( Integer userId );
 
-	List<Flight> findFlightsForUser( Integer userId, Integer offset, Integer size );
+	List<Flight> findFlightsForUser( Integer userId, Integer offset, Integer size, boolean includePilot,
+	        boolean includeAircraft, boolean includeAirports );
 
 	void deleteById( Integer id );
 

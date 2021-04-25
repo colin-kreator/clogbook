@@ -46,36 +46,13 @@
                   
                 </div>
 
-                <div class="level-item has-text-centered is-unselectable">
-                  <div class="box">
-                    <p class="heading">Total hours</p>
-                    <p> <span class="title is-4">40 000</span> <span class="title is-6">:08</span> </p>
+                <div class="level-item has-text-centered is-unselectable cnt" th:each="stat : ${statTypes}" th:data-value="${stat}">
+                  <div class="box" th:title="${stat.description}">
+                    <p class="heading" th:text="${stat.alias}">COUNTER NAME</p>
+                    <p> <span class="title is-4 cnt-main">0</span> <span class="title is-6 cnt-sec"></span> </p>
                   </div>
                 </div>
-                <div class="level-item has-text-centered is-unselectable">
-                  <div class="box">
-                    <p class="heading">Night hours</p>
-                    <p> <span class="title is-4">18 000</span> <span class="title is-6">:53</span> </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered is-unselectable">
-                  <div class="box">
-                    <p class="heading">Ifr hours</p>
-                    <p> <span class="title is-4">25 000</span> <span class="title is-6">:41</span> </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered is-unselectable">
-                  <div class="box">
-                    <p class="heading">12 months hours</p>
-                    <p> <span class="title is-4">168</span> <span class="title is-6">:17</span> </p>
-                  </div>
-                </div>
-                <div class="level-item has-text-centered is-unselectable">
-                  <div class="box">
-                    <p class="heading">3 months hours</p>
-                    <p> <span class="title is-4">0</span> <span class="title is-6">:00</span> </p>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>

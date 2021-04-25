@@ -1,6 +1,6 @@
 package com.pilotair.clogbook.webapp.api;
 
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class PilotResource {
 
 	@GetMapping
 	@PreAuthorize( "hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')" )
-	public List<PilotDto> getUserPilotsDto( Authentication auth ) {
+	public Set<PilotDto> getUserPilotsDto( Authentication auth ) {
 		logger.info( String.format( "User %s requests its pilots", auth.getName() ) );
 
 		return pilotService.getDtoByOwnerId( ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId() );

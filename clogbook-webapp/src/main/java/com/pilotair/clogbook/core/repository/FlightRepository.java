@@ -24,4 +24,12 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 	        @Param( value = "dateend" ) LocalDate dateEnd );
 
 	void deleteByUserId( Integer userId );
+
+	List<Flight> findByUserId( Integer userId );
+
+	List<Flight> findByUserIdAndDateAfter( Integer userId, LocalDate date );
+
+	List<Flight> findByUserIdAndDateBetween( Integer userId, LocalDate dateAfter, LocalDate dateBefore );
+
+	List<Flight> findByUserIdAndDateBefore( Integer userId, LocalDate date );
 }

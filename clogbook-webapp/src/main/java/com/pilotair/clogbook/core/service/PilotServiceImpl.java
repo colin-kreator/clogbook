@@ -1,6 +1,8 @@
 package com.pilotair.clogbook.core.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class PilotServiceImpl implements PilotService {
 			 * Si le pilote semble etre nouveau (id null), on va voir si l'utilisateur n'a 
 			 * pas déjà un pilote avec le même nom que celui donné
 			 */
-			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastName( userId, pilot.getLastName() );
+			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastNameIgnoreCase( userId, pilot.getLastName() );
 			if ( pltCheck != null ) {
 				pilot.setId( pltCheck.getId() );
 				return pltCheck;
@@ -43,7 +45,7 @@ public class PilotServiceImpl implements PilotService {
 			 * Si le pilote semble etre nouveau (id null), on va voir si l'utilisateur n'a 
 			 * pas déjà un pilote avec le même nom que celui donné
 			 */
-			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastName( userId, pilotDto.getLastName() );
+			Pilot pltCheck = pilotRepository.findByOwnerPilotIdAndLastNameIgnoreCase( userId, pilotDto.getLastName() );
 			if ( pltCheck != null ) {
 				return pltCheck;
 			}
@@ -60,8 +62,10 @@ public class PilotServiceImpl implements PilotService {
 	}
 
 	@Override
-	public List<PilotDto> getDtoByOwnerId( int ownerId ) {
-		List<Pilot> pilots = pilotRepository.findByOwnerPilotId( ownerId );
+	public Set<PilotDto> getDtoByOwnerId( int ownerId ) {
+		Set<Pilot> pilots = new HashSet<>();
+
+		pilotRepository.findByOwnerPilotId( ownerId ).forEach( pilots::add );
 
 		return pilots.stream().map( plt -> {
 			PilotDto dto = new PilotDto( plt.getId(), plt.getLastName(), plt.getFirstName() );
@@ -70,7 +74,7 @@ public class PilotServiceImpl implements PilotService {
 				dto.setFirstName( "Self" );
 			}
 			return dto;
-		} ).collect( Collectors.toList() );
+		} ).collect( Collectors.toSet() );
 	}
 
 	@Override

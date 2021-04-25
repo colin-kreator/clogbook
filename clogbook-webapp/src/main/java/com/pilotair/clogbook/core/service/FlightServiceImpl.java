@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,13 +52,49 @@ public class FlightServiceImpl implements FlightService {
 			flight.setPilot( pilotService.save( pilotDto, userId ) );
 		}
 
+		System.err.println( flight.getDate() );
 		return flightRepository.save( flight );
 	}
 
 	@Override
+	@Transactional( readOnly = true )
 	public List<Flight> findFlightsForUser( Integer userId,
-	        Integer offset, Integer size ) {
-		return flightPagingRepository.findFlightsForUser( userId, offset, size );
+	        Integer offset, Integer size,
+	        boolean includePilot, boolean includeAircraft, boolean includeAirports ) {
+		List<Flight> flights = flightPagingRepository.findFlightsForUser( userId, offset, size );
+		flights.forEach( flt -> {
+			if ( includeAircraft )
+				Hibernate.initialize( flt.getAircraft() );
+			if ( includePilot )
+				Hibernate.initialize( flt.getPilot() );
+			if ( includeAirports ) {
+				Hibernate.initialize( flt.getDepartureAirport() );
+				Hibernate.initialize( flt.getArrivalAirport() );
+			}
+
+			if ( flt.getAircraft() != null ) {
+				if ( flt.getAircraft().getAircraftModel() != null )
+					flt.getAircraft().getAircraftModel().getCustomName();
+			}
+			if ( flt.getDepartureAirport() != null )
+				flt.getDepartureAirport().getIataCode();
+			if ( flt.getArrivalAirport() != null )
+				flt.getArrivalAirport().getIataCode();
+
+			Pilot p = flt.getPilot();
+			if ( p != null ) {
+				if ( p.getId().equals( userId ) ) {
+					/*
+					 * In the particular case that the pilot is the user itself, we replace its name by "Self"
+					 */
+					flt.setPilotDto( new PilotDto( p.getId(), "Self", "" ) );
+				} else {
+					flt.setPilotDto( new PilotDto( p.getId(), p.getLastName(), p.getFirstName() ) );
+				}
+			}
+		} );
+
+		return flights;
 	}
 
 	@Override

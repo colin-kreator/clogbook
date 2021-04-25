@@ -13,7 +13,7 @@ public class FlightForm {
 
 	private Integer		id;
 
-	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yy" )
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy" )
 	private LocalDate	date;
 
 	private Aircraft	aircraft;

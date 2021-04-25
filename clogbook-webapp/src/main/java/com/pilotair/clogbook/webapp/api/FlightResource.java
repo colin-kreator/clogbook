@@ -102,7 +102,7 @@ public class FlightResource {
 		logger.info( String.format( "User %s requests its flights, offset " + offset, auth.getName() ) );
 		List<Flight> flights = flightService.findFlightsForUser(
 		        ( (ApplicationUser) ( auth.getPrincipal() ) ).getUser().getId(),
-		        offset, size );
+		        offset, size, true, true, true );
 
 		return flights;
 

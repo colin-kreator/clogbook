@@ -12,6 +12,6 @@ public interface PilotRepository extends JpaRepository<Pilot, Integer> {
 
 	List<Pilot> findByOwnerPilotId( Integer ownerId );
 
-	Pilot findByOwnerPilotIdAndLastName( Integer ownerId, String lastName );
+	Pilot findByOwnerPilotIdAndLastNameIgnoreCase( Integer ownerId, String lastName );
 
 }

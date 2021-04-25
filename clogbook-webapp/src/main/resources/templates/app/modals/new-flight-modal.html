@@ -74,6 +74,7 @@
 	                        <div class="control has-icons-left reg">
 	                          <input class="input" type="text" style="text-transform: uppercase" list="act_reg_datalist">
 	                          <datalist id="act_reg_datalist">
+	                          	<!--option th:each="act : ${aircrafts}" th:value="${act.id}" th:label="${act.registration}" th:text="${act.registration}"-->
 	                          </datalist>
 	                          <span class="icon is-small is-left">
 	                            <i class="fas fa-plane"></i>
@@ -85,6 +86,7 @@
 	                        <div class="control has-icons-left type">
 	                          <input class="input" type="text" list="act_typ_datalist">
 	                          <datalist id="act_typ_datalist">
+	                          	<!--option th:each="aml : ${aircraftModels}" th:value="${aml.id}" th:label="${am.brand+' '+am.model}" th:text="${am.customName}"-->
 	                          </datalist>
 	                          <span class="icon is-small is-left">
 	                            <i class="fas fa-plane"></i>
@@ -319,7 +321,7 @@
 	                      <div class="column">
 	                        <div class="field">
 	                          <div class="control xc-time">
-	                            <input class="input" type="text"  placeholder="hh:mm">
+	                            <input class="input initializable" type="text"  placeholder="hh:mm">
 	                          </div>
 	                          <p class="help is-dark has-text-centered">X-country time</p>
 	                        </div>
